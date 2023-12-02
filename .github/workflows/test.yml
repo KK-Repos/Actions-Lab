@@ -15,6 +15,11 @@ jobs:
         run: echo "This is 2nd Job"
       - name: Branch Name
         run: echo Branch Name ${{ github.ref_name }}
+      - name: Clear cache
+        run: |
+          echo "Clearing cache..."
+          rm -rf ~/.cache/actions/*
+
   job-3:
     needs: job-2
     runs-on: ubuntu-latest

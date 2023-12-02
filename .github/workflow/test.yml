@@ -1,0 +1,12 @@
+name: test-github-Actions
+on: push
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: print the value
+        run: echo "Name is kk"

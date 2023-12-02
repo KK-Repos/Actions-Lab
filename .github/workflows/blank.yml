@@ -1,0 +1,8 @@
+name: Sample Workflow
+on: push
+jobs:
+  first-Job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the Github meta data
+        run: echo ${{ toJson(github) }}

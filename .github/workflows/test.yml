@@ -15,6 +15,7 @@ jobs:
         run: echo "This is 1st Job"
   job-2:
     needs: [job-1,temp]
+    if: success() || success(job-1)
     runs-on: ubuntu-latest
     steps:
       - name: print the value - Job-2

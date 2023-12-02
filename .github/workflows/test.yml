@@ -2,6 +2,7 @@ name: test-github-Actions
 on: push
 jobs:
   job-1:
+    if: ${{github.event_name != 'schedule' || github.ref_name != 'master'}}
     runs-on: ubuntu-latest
     steps:
       - name: print the value  - Job-1
@@ -12,6 +13,8 @@ jobs:
     steps:
       - name: print the value - Job-2
         run: echo "This is 2nd Job"
+      - name: Branch Name
+        run: echo Branch Name ${{ github.ref_name }}
   job-3:
     needs: job-2
     runs-on: ubuntu-latest

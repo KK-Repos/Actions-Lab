@@ -13,5 +13,6 @@ jobs:
     steps:
       - name: print the value - Job-2
         run: echo "This is 2nd Job"
-      - name: reuseable
-        uses: .github/workflows/reuseable.yml
+  jobs-4:
+    needs: job-3
+    uses: ./.github/workflows/reuseable.yml

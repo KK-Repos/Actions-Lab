@@ -2,7 +2,7 @@ name: Main-Actions
 on: push
 jobs:
   job-1:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: print the value  - Job-1
         run: echo "This is 1st Job"

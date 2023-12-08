@@ -22,7 +22,7 @@ jobs:
     name: Validate Branch Name
     steps:
       - name: Checking master branch
-        run: if [[ "${{ github.ref_name }}" == "master" ]]; then echo "Master branch detected. Exiting with code 0"; exit 0; fi;
+        run: if [[ "${{ github.ref_name }}" == "main" ]]; then echo "Master branch detected. Exiting with code 0"; exit 0; fi;
       - name: Validate Branch Name
         run: echo "validate-branch-name"
 

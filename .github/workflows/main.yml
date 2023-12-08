@@ -6,8 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       validation_result: ${{ steps.validate_branch_name.outputs.validation_result }}
-    env:
-      BRANCH_VALIDATION_RESULT: ${{ steps.validate_branch_name.outputs.validation_result }}
     steps:
     - name: Validate branch name
       run: |

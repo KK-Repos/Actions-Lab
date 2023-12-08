@@ -17,19 +17,19 @@ concurrency:
 
 jobs:
   validate-branch-name:
-    if: ${{ github.ref_name != 'master' && github.event_name != 'schedule' && github.event.inputs.optionInput == 'yes' }}
     environment: test
     runs-on: ubuntu-latest
     name: Validate Branch Name
     steps:
+      - name: Checking master branch
+        run: if [[ "${{ github.ref_name }}" == "master" ]]; then echo "Master branch detected. Exiting with code 0"; exit 0; fi;
       - name: Validate Branch Name
         run: echo "validate-branch-name"
 
   runner-indexes:
-    needs: []
+    needs: validate-branch-name
     environment: test
     runs-on: ubuntu-latest
-    if: always()
     name: Generate parallelism
     outputs:
       json: ${{ steps.generate-index-list.outputs.json }}
@@ -56,11 +56,6 @@ jobs:
     needs: [runner-indexes, create-actions-runner]
     environment: test
     runs-on: ubuntu-latest
-    name: 'Runner-${{ github.run_id }}-${{ matrix.runner-index }}'
-    strategy:
-      fail-fast: false
-      matrix:
-        runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
     steps:
       - name: Archive Cypress screenshots
         run: echo "Testing"

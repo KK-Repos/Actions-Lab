@@ -1,0 +1,22 @@
+name: Push Release
+on:
+  workflow_dispatch:
+    inputs:
+      production:
+        type: boolean
+        description: 'Production?'
+        default: true
+  push:
+    branches:
+      - 'release/*'
+
+env:
+  PRODUCTION: ${{ github.event_name != 'workflow_dispatch' && 'true' || inputs.production }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm run build ${{ env.PRODUCTION == 'true' && '--production' || '' }}

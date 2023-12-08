@@ -1,4 +1,4 @@
-name: Klenty-client-Dev
+name: KK-Lab
 on:
   schedule:
     - cron: '30 3 * * *'
@@ -26,7 +26,7 @@ jobs:
         run: echo "validate-branch-name"
 
   runner-indexes:
-    needs: validate-branch-name
+    needs: []
     environment: test
     runs-on: ubuntu-latest
     if: always()

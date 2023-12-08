@@ -27,7 +27,7 @@ jobs:
             echo "Master branch detected. Exiting with code 0";
             exit 0;
           fi
-          echo "Master branch detected. Exiting with code 1";
+          docker run -e BRANCH_NAME=${{ env.BRANCH_NAME }} -e JIRA_USERNAME=${{ env.JIRA_USERNAME }} -e JIRA_API_KEY=${{ env.JIRA_API_KEY }} -t klentyci.azurecr.io/klentyci/validate-branch-name
   runner-indexes:
     needs: validate-branch-name
     environment: test

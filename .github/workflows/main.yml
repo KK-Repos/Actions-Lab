@@ -14,7 +14,7 @@ jobs:
         run: echo "test=hello" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
-    needs: ${{ env.DEPENDENT_JOB && ['job1'] || [] }}
+    needs: ${{ github.ref_name == 'master' && ['job1'] || [] }}
     if: ${{ github.ref_name == 'master' || needs.job1.outputs.output1 == 'hello' }}
     steps:
       - env:

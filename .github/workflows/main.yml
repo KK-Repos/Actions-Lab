@@ -8,11 +8,11 @@ jobs:
       validation_result: ${{ steps.step1.outputs.validation_result }}
     steps:
     - id: step1
-    - name: Validate branch name
-      run: echo "validation_result=success" >> "$GITHUB_OUTPUT"
+      name: Validate branch name
+      run: |
+        echo "validation_result=success" >> "$GITHUB_OUTPUT"
     - name: Print the value - Job-1
       run: echo "This is 1st Job"
-
   job-2:
     needs: job-1
     runs-on: ubuntu-latest
@@ -21,4 +21,5 @@ jobs:
     - name: Print the value - Job-2
       run: |
         echo "Outputs: ${{ needs.job-1.outputs.validation_result }}"
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3

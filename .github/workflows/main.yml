@@ -2,7 +2,7 @@ name: Main-Actions
 on: push
 jobs:
   job-1:
-    if: ${{ github.ref_name == 'master' }}
+    if: ${{ github.ref_name != 'master' }}
     runs-on: ubuntu-latest
     steps:
       - name: print the value  - Job-1

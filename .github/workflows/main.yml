@@ -2,7 +2,7 @@ name: Main-Actions
 on: push
 jobs:
   job-1:
-    if: ${{ github.ref_name == 'master' }}
+    if: always() == false
     runs-on: ubuntu-latest
     outputs:
       validation_result: ${{ steps.step1.outputs.validation_result }}
@@ -16,7 +16,7 @@ jobs:
   job-2:
     needs: job-1
     runs-on: ubuntu-latest
-    if: needs.job-1.outputs.validation_result == 'success'
+    if: always() || needs.validate-branch-name.result == 'skipped' 
     steps:
     - name: Print the value - Job-2
       run: |

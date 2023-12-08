@@ -8,7 +8,7 @@ jobs:
       - run: echo "placeholder"
   job2:
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ needs.bridge-job.result != 'failure' }}
     needs: bridge-job
     steps:
       - name: fail if conditional job failed

@@ -3,6 +3,7 @@ on: push
 jobs:
   job-1:
     runs-on: ubuntu-latest
+    if: ${{ github.ref_name != 'master' || github.event_name != 'schedule' || github.event.inputs.optionInput == 'yes' }}
     outputs:
       validation_result: ${{ steps.step1.outputs.validation_result }}
     steps:

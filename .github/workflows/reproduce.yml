@@ -21,11 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Validate Branch Name
     steps:
-      - name: Checking master branch
-        run: if [[ "${{ github.ref_name }}" == "main" ]]; then echo "Master branch detected. Exiting with code 0"; exit 0; fi;
-      - name: Validate Branch Name
-        run: echo "validate-branch-name"
-
+      - name: Validate branch name
+        run: |
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
+            echo "Master branch detected. Exiting with code 0";
+            exit 0;
+          fi
+          echo "Master branch detected. Exiting with code 1";
   runner-indexes:
     needs: validate-branch-name
     environment: test

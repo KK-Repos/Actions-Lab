@@ -5,7 +5,6 @@ env:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    if: ${{ env.DEPENDENT_JOB == 'true' }}
     outputs:
       output1: ${{ steps.step1.outputs.test }}
     steps:

@@ -17,7 +17,7 @@ jobs:
   job-2:
     needs: job-1
     runs-on: ubuntu-latest
-    if: needs.job-1.outputs.validation_result == 'success'
+    # if: needs.job-1.outputs.validation_result == 'success'
     steps:
     - name: Print the value - Job-2
       run: |

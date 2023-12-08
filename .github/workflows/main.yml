@@ -10,7 +10,7 @@ jobs:
 
   job-2:
     if: needs.job-1.result == 'skipped'
-    needs: job-1
+    # needs: job-1
     runs-on: ubuntu-latest
     steps:
       - name: print the value - Job-2

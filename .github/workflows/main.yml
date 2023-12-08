@@ -11,7 +11,7 @@ jobs:
   job-2:
     needs: job-1
     runs-on: ubuntu-latest
-    if: always() && needs.validate-branch-name.result == 'skipped' || needs.validate-branch-name.result == 'success'
+    if: needs.validate-branch-name.result == 'success' || needs.validate-branch-name.result == 'skipped'
     steps:
       - name: print the value - Job-2
         run: echo ${{needs.test-1.result}}

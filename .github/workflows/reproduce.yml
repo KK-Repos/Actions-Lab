@@ -22,12 +22,12 @@ jobs:
     name: Validate Branch Name
     steps:
       - name: Check branch name
-        if: ${{ github.ref_name }} == 'master'
+        if: ${{ github.ref_name == 'master' }} 
         run: |
           exit 0
       
       - name: Validate branch name
-        if: ${{ github.ref_name }} != 'master'
+        if: ${{ github.ref_name != 'master' }} 
         run: echo "Docker run..."
 
 

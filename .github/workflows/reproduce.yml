@@ -21,14 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     name: Validate Branch Name
     steps:
-      - name: Validate branch name
-        if: ${{ github.ref_name }} != 'master'
-        run: |
-          docker run -e BRANCH_NAME=${{ github.ref_name }} -e JIRA_USERNAME=${{ env.JIRA_USERNAME }} -e JIRA_API_KEY=${{ env.JIRA_API_KEY }} -t klentyci.azurecr.io/klentyci/validate-branch-name
-      - name: Exit workflow if master branch
+      - name: Check branch name
         if: ${{ github.ref_name }} == 'master'
         run: |
           exit 0
+      
+      - name: Validate branch name
+        if: ${{ github.ref_name }} != 'master'
+        run: echo "Docker run..."
+
 
   runner-indexes:
     needs: validate-branch-name

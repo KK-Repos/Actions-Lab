@@ -65,3 +65,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
+      - name: push to ECR
+        run: |
+          docker tag -t kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${{ github.sha }}
+          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${{ github.sha }}

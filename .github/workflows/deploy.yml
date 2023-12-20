@@ -1,6 +1,15 @@
 name: Deploy-Actions
 on: push
+
+env:
+  PORT=3000
 jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
+          docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
   unit-test:
     runs-on: ubuntu-latest
     steps:

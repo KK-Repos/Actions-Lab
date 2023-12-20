@@ -44,10 +44,24 @@ jobs:
         run: docker load -i workspace/mailsender_image
       - name: run unit test
         run: docker run -t --entrypoint npm kk-ms:latest run test
-  # deploy:
-  #   environment: prod
-  #   runs-on: ubuntu-latest
-  #   needs: unit-test
-  #   steps:
-  #     - name: "deploy the MS"
-  #       run: exit 0
+  push-to-ecr:
+    environment: prod
+    needs: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-image
+          path: workspace
+      - name: Get docker image
+        run: docker load -i workspace/mailsender_image
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a

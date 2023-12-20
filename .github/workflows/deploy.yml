@@ -19,13 +19,31 @@ jobs:
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .
       - name: Persist Image
         run: |
-          # echo $TAG
           docker save -o workspace/mailsender_image kk-ms:latest
+      - name: Upload Data Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-image
+          path: workspace/mailsender_image
+          retention-days: 1
+          
   unit-test:
     needs: build-image
     runs-on: ubuntu-latest
     steps:
-      - run: echo "unit test passed"
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-image
+          path: workspace
+      - name: Get docker image
+        run: docker load -i workspace/mailsender_image
+      - name: run unit test
+        run: docker run -it --entrypoint npm kl-mailsender:latest run test
   # deploy:
   #   environment: prod
   #   runs-on: ubuntu-latest

@@ -11,12 +11,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: create a workspace
+        run: mkdir -p workspace
       - name: Build Image
         run: |
           TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
           docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
       - name: Persist Image
-        run: docker save -o kk_image kk-ms:${TAG}
+        run: docker save -o workspace/mailsender_image kk-ms:${TAG}
   unit-test:
     needs: build-image
     runs-on: ubuntu-latest

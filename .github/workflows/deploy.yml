@@ -7,17 +7,22 @@ jobs:
   build-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - run: |
           TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
           docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
   unit-test:
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
       - run: echo "unit test passed"
-  deploy:
-    environment: prod
-    runs-on: ubuntu-latest
-    needs: unit-test
-    steps:
-      - name: "deploy the MS"
-        run: exit 0
+  # deploy:
+  #   environment: prod
+  #   runs-on: ubuntu-latest
+  #   needs: unit-test
+  #   steps:
+  #     - name: "deploy the MS"
+  #       run: exit 0

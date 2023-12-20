@@ -18,7 +18,9 @@ jobs:
           TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
           docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
       - name: Persist Image
-        run: docker save -o workspace/mailsender_image kk-ms:${TAG}
+        run: |
+          echo $TAG
+          docker save -o workspace/mailsender_image kk-ms:${TAG}
   unit-test:
     needs: build-image
     runs-on: ubuntu-latest

@@ -43,7 +43,7 @@ jobs:
       - name: Get docker image
         run: docker load -i workspace/mailsender_image
       - name: run unit test
-        run: docker run -t --entrypoint npm mailsender_image:latest run test
+        run: docker run -t --entrypoint npm kk-ms:latest run test
   # deploy:
   #   environment: prod
   #   runs-on: ubuntu-latest

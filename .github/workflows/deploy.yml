@@ -2,7 +2,7 @@ name: Deploy-Actions 🔥
 on: push
 
 env:
-  PORT: 3000
+  TAG: ${{ needs.build-image.outputs.result }}
 jobs:
 
   build-image:
@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/reuseable_unit-test.yml
     with:
       job_to_run: unit-test
-      tag_name: ${{ needs.build-image.outputs.result }}
+      tag_name: ${TAG}
   lint:
     needs: build-image
     runs-on: ubuntu-latest

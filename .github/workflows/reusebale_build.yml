@@ -1,0 +1,31 @@
+name: Reuseable-Workflow
+on:
+  workflow_call:
+    inputs:
+      job_to_run:
+        type: string
+        required: false
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: create a workspace
+        run: mkdir -p workspace
+      - name: Build Image
+        run: |
+          TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
+          docker build --build-arg PORT=${PORT} -t kk-ms:latest .
+      - name: Persist Image
+        run: |
+          docker save -o workspace/mailsender_image kk-ms:latest
+      - name: Upload Data Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-image
+          path: workspace/mailsender_image
+          retention-days: 1

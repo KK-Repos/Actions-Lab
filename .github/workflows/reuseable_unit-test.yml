@@ -1,0 +1,19 @@
+name: Reuseable-Workflow
+on:
+  workflow_call:
+    inputs:
+      job_to_run:
+        type: string
+        required: false
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Unit test run
+        run: docker run -t --entrypoint npm kk-ms:latest run test
+          

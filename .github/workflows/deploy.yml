@@ -15,8 +15,9 @@ jobs:
         id: create-tag-step
         run: |
           mkdir workspace
-          TAG=$(date --utc +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" >> $BASH_ENV &&
-          echo ${TAG} >> workspace/vars.txt && source $BASH_ENV
+          TAG=$(date --utc +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" >> $BASH_ENV
+          echo ${TAG} >> workspace/vars.txt
+          source $BASH_ENV
           echo $TAG
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v2

@@ -2,9 +2,6 @@ name: Reuseable-Workflow
 on:
   workflow_call:
     inputs:
-      job_to_run:
-        type: string
-        required: false
       tag_name:
         type: string
         required: true
@@ -12,10 +9,11 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-    
+    env:
+      tag: ${{inputs.tag_name}}
     steps:
       - name: print the tag name
-        run: echo ${{inputs.tag_name}}
+        run: echo ${tag}
       - name: Checkout Branch
         uses: actions/checkout@v3
         with:

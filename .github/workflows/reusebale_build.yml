@@ -2,9 +2,6 @@ name: Reuseable-Workflow
 on:
   workflow_call:
     inputs:
-      job_to_run:
-        type: string
-        required: false
       tag_name:
           type: string
           required: true

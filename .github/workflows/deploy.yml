@@ -60,7 +60,7 @@ jobs:
           source <(echo "export TAG=$TAG" >> ~/.bashrc)
           echo $TAG
       - name: test path
-        run: echo kk
+        run: echo $TAG
   # build-image:
   #     needs: gen-tag
   #     uses: ./.github/workflows/reusebale_build.yml

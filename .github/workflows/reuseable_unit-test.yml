@@ -5,11 +5,16 @@ on:
       job_to_run:
         type: string
         required: false
+      tag_name:
+        type: string
+        required: true
 
 jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
+      - name: print the tag name
+        run: echo ${{inputs.tag_name}}
       - name: Checkout Branch
         uses: actions/checkout@v3
         with:

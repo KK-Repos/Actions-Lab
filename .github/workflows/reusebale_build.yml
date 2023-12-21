@@ -5,10 +5,17 @@ on:
       job_to_run:
         type: string
         required: false
+    
+    outputs:
+      result:
+        descripton: test-output
+        value: ${{ jobs.build-image.outputs.output1 }}
 
 jobs:
   build-image:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.create-tag-step.outputs.TAG }}
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
@@ -16,9 +23,13 @@ jobs:
           persist-credentials: false
       - name: create a workspace
         run: mkdir -p workspace
+      - name: Generate a image Tag
+        id: create-tag-step
+        run: |
+          TAG=$(date --utc +%Y.%m.%d-%H.%M)
+          echo "TAG=${TAG}" >> $GITHUB_OUTPUT
       - name: Build Image
         run: |
-          TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .
       - name: Persist Image
         run: |

@@ -5,7 +5,6 @@ env:
   PORT: 3000
 jobs:
 
-
   gen-tag:
     name: "Generate Tag for Image"
     runs-on: ubuntu-latest
@@ -17,13 +16,17 @@ jobs:
         run: |
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo "TAG=${TAG}" >> $GITHUB_OUTPUT
+      - name: print the echo
+        run: |
+          concatenated_value="${{ steps.create-tag-step.outputs.TAG }} + ${{ github.ref_name }}"
+          echo $concatenated_value
   
-  build-image:
-      needs: gen-tag
-      uses: ./.github/workflows/reusebale_build.yml
-      with:
-        job_to_run: build-image
-        tag_name: ${{ needs.gen-tag.outputs.output1 }}
+  # build-image:
+  #     needs: gen-tag
+  #     uses: ./.github/workflows/reusebale_build.yml
+  #     with:
+  #       job_to_run: build-image
+  #       tag_name: ${{ needs.gen-tag.outputs.output1 }}
 
   # unit-test:
   #   needs: lint

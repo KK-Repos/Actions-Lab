@@ -58,7 +58,9 @@ jobs:
           TAG=$(head -n 1 workspace/vars.txt)
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
-      - name: Test path
+      - name: Test path-1
+        run: echo ${{ env.TAG }}
+      - name: Test path-2
         run: echo ${{ env.TAG }}
   # build-image:
   #     needs: gen-tag

@@ -32,7 +32,7 @@ jobs:
           retention-days: 1
 
   unit-test:
-    if: ${{ i nputs.job_to_run == 'unit-test' }}
+    if: ${{ inputs.job_to_run == 'unit-test' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Branch

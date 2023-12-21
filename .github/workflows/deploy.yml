@@ -58,6 +58,7 @@ jobs:
           TAG=$(head -n 1 workspace/vars.txt)
           export TAG
           source <(echo "export TAG=$TAG" >> ~/.bashrc)
+          echo $TAG
       - name: test path
         run: echo $TAG
   # build-image:

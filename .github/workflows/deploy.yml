@@ -7,8 +7,8 @@ jobs:
 
   build-image:
       uses: ./.github/workflows/reusebale.yml
-      # with:
-      #   job_to_run: build-image
+      with:
+        job_to_run: build-image
     
   # build-image:
   #   runs-on: ubuntu-latest  # Adjust the runner if needed

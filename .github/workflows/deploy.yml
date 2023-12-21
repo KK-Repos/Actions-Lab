@@ -53,14 +53,11 @@ jobs:
         with:
           name: workspace
           path: workspace
-      - name: test path
-        run: ls -a
       - name: test env
         run: |
-          TAG=$(cat workspace/vars.txt | sed -n '1p') &&
-          echo "export TAG='${TAG}'" >> $BASH_ENV &&
-          source $BASH_ENV
-          echo $TAG
+          TAG=$(head -n 1 vars.txt)
+          export TAG
+          source <(echo "export TAG=$TAG" >> ~/.bashrc)
       - name: test path
         run: echo $TAG
   # build-image:

@@ -1,8 +1,14 @@
 name: Reuseable-Workflow
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      job_to_run:
+        type: string
+        required: true
 
 jobs:
   build-image:
+    if: ${{ github.event.inputs.job_to_run == 'build-image' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Branch

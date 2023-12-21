@@ -61,6 +61,8 @@ jobs:
           echo "export TAG='${TAG}'" >> $BASH_ENV &&
           source $BASH_ENV
           echo $TAG
+      - name: test path
+        run: echo $TAG
   # build-image:
   #     needs: gen-tag
   #     uses: ./.github/workflows/reusebale_build.yml

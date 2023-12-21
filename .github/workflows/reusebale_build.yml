@@ -5,6 +5,9 @@ on:
       job_to_run:
         type: string
         required: false
+    tag_name:
+        type: string
+        required: true
     outputs:
       result:
         value: ${{ jobs.build-image.outputs.output1 }}
@@ -16,8 +19,6 @@ jobs:
   build-image:
     environment: test
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.create-tag-step.outputs.TAG }}
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
@@ -25,18 +26,13 @@ jobs:
           persist-credentials: false
       - name: create a workspace
         run: mkdir -p workspace
-      - name: Generate a image Tag
-        id: create-tag-step
-        run: |
-          TAG=$(date --utc +%Y.%m.%d-%H.%M)
-          echo "TAG=${TAG}" >> $GITHUB_OUTPUT
       - name: Print ENV
         run: echo ${PORT}
       - name: Build Image
         run: |
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .
-      - name: Checking the acces
-        run: echo ${{steps.create-tag-step.outputs.TAG}}
+      - name: Checking the tag name
+        run: echo ${{inputs.tag_name}}
       - name: Persist Image
         run: |
           docker save -o workspace/mailsender_image kk-ms:latest

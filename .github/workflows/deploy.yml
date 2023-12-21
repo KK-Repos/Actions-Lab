@@ -2,19 +2,34 @@ name: Deploy-Actions 🔥
 on: push
 
 env:
-  TAG: ${{ needs.build-image.outputs.result }}
+  PORT: 3000
 jobs:
 
+
+  gen-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.create-tag-step.outputs.TAG }}
+    steps:
+      - name: Generate a image Tag
+        id: create-tag-step
+        run: |
+          TAG=$(date --utc +%Y.%m.%d-%H.%M)
+          echo "TAG=${TAG}" >> $GITHUB_OUTPUT
+  
   build-image:
+      needs: gen-tag
       uses: ./.github/workflows/reusebale_build.yml
       with:
         job_to_run: build-image
+        tag_name: ${{ needs.gen-tag.outputs.output1 }}
+
   unit-test:
     needs: lint
     uses: ./.github/workflows/reuseable_unit-test.yml
     with:
       job_to_run: unit-test
-      tag_name: ${TAG}
+      tag_name: ${{ needs.build-image.outputs.result }}
   lint:
     needs: build-image
     runs-on: ubuntu-latest

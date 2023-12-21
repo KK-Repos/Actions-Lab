@@ -16,14 +16,13 @@ jobs:
         run: |
           mkdir workspace
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
-          echo "TAG='${TAG}'" >> $GITHUB_ENV
-          echo ${TAG} >> workspace/vars.txt
+          echo ${TAG} >> vars.txt
           echo $TAG
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v2
         with:
           name: workspace
-          path: workspace/vars.txt
+          path: vars.txt
           retention-days: 1
   
   check-test-1:
@@ -38,7 +37,7 @@ jobs:
           name: workspace
           path: vars.txt
       - name: test path
-        run: ls
+        run: ls -a
       - name: test env
         run: |
           TAG=$(head -n 1 vars.txt)

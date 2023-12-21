@@ -6,7 +6,6 @@ env:
 jobs:
 
   build-image:
-    - name: Build image
       uses: .github/workflows/reusebale.yml@ build-image
     
   # build-image:

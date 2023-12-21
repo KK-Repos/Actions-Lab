@@ -55,7 +55,7 @@ jobs:
           path: workspace
       - name: test env
         run: |
-          TAG=$(head -n 1 vars.txt)
+          TAG=$(head -n 1 workspace/vars.txt)
           export TAG
           source <(echo "export TAG=$TAG" >> ~/.bashrc)
       - name: test path

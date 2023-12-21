@@ -21,17 +21,29 @@ jobs:
           concatenated_value="${{ steps.create-tag-step.outputs.TAG }} + ${{ github.ref_name }}"
           echo $concatenated_value
   
-  build-image:
-      needs: gen-tag
-      uses: ./.github/workflows/reusebale_build.yml
-      with:
-        tag_name: ${{ needs.gen-tag.outputs.output1 }}
+  check-test-1:
+    needs: gen-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo ${{ needs.gen-tag.outputs.output1 }}
+  check-test:
+    needs: check-test-1
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo ${{ needs.gen-tag.outputs.output1 }}
+  # build-image:
+  #     needs: gen-tag
+  #     uses: ./.github/workflows/reusebale_build.yml
+  #     with:
+  #       tag_name: ${{ needs.gen-tag.outputs.output1 }}
 
-  unit-test:
-    needs: build-image
-    uses: ./.github/workflows/reuseable_unit-test.yml
-    with:
-      tag_name: ${{ needs.gen-tag.outputs.output1 }}
+  # unit-test:
+  #   needs: build-image
+  #   uses: ./.github/workflows/reuseable_unit-test.yml
+  #   with:
+  #     tag_name: ${{ needs.gen-tag.outputs.output1 }}
   # lint:
   #   needs: build-image
   #   runs-on: ubuntu-latest

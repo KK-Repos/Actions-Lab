@@ -57,7 +57,9 @@ jobs:
         run: ls -a
       - name: test env
         run: |
-          TAG=$(head -n 1 workspace/vars.txt)
+          TAG=$(cat workspace/vars.txt | sed -n '1p') &&
+          echo "export TAG='${TAG}'" >> $BASH_ENV &&
+          source $BASH_ENV
           echo $TAG
   # build-image:
   #     needs: gen-tag

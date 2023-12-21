@@ -35,12 +35,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: workspace
-          path: vars.txt
+          path: workspace
       - name: test path
         run: ls -a
       - name: test env
         run: |
-          TAG=$(head -n 1 vars.txt)
+          TAG=$(head -n 1 workspace/vars.txt)
           echo $TAG
   check-test:
     needs: check-test-1

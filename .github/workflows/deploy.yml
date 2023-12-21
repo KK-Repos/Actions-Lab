@@ -19,8 +19,8 @@ jobs:
     needs: build-image
     runs-on: ubuntu-latest
     steps:
-      -name: Test
-       run: echo "Lint running"
+      - name: Test
+        run: echo "Lint running"
   
   # build-image:
   #   runs-on: ubuntu-latest  # Adjust the runner if needed

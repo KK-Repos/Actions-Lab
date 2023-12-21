@@ -8,7 +8,6 @@ on:
     
     outputs:
       result:
-        descripton: test-output
         value: ${{ jobs.build-image.outputs.output1 }}
 
 jobs:

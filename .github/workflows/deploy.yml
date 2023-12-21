@@ -31,7 +31,6 @@ jobs:
     needs: build-image
     uses: ./.github/workflows/reuseable_unit-test.yml
     with:
-      job_to_run: unit-test
       tag_name: ${{ needs.gen-tag.outputs.output1 }}
   # lint:
   #   needs: build-image

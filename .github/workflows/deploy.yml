@@ -4,7 +4,7 @@ on: push
 env:
   PORT: 3000
 jobs:
-  create-tag:
+  build-image:
     runs-on: ubuntu-latest  # Adjust the runner if needed
     outputs:
       output1: ${{ steps.create-tag-step.outputs.TAG }}
@@ -16,6 +16,10 @@ jobs:
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           # Set the tag as an environment variable for subsequent steps
           echo "TAG=${TAG}" >> $GITHUB_OUTPUT
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Build image
+        uses: .github/workflows/reusebale.yml
   check:
     runs-on: ubuntu-latest
     needs: create-tag
@@ -24,28 +28,6 @@ jobs:
           OUTPUT1: ${{needs.create-tag.outputs.output1}}
         run: echo "$OUTPUT1" 
 
-  # build-image:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Branch
-  #       uses: actions/checkout@v3
-  #       with:
-  #         persist-credentials: false
-  #     - name: create a workspace
-  #       run: mkdir -p workspace
-  #     - name: Build Image
-  #       run: |
-  #         TAG=$(date +%Y.%m.%d-%H.%M) && echo "export TAG='${TAG}'" &&
-  #         docker build --build-arg PORT=${PORT} -t kk-ms:latest .
-  #     - name: Persist Image
-  #       run: |
-  #         docker save -o workspace/mailsender_image kk-ms:latest
-  #     - name: Upload Data Artifact
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: build-image
-  #         path: workspace/mailsender_image
-  #         retention-days: 1
           
   # unit-test:
   #   needs: build-image

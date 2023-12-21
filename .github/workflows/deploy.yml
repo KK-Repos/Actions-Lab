@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/reuseable_unit-test.yml
     with:
       job_to_run: unit-test
-      tag_name: ${{ needs.buil-image.outputs.result }}
+      tag_name: ${{ needs.build-image.outputs.result }}
   
   # build-image:
   #   runs-on: ubuntu-latest  # Adjust the runner if needed

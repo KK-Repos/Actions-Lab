@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-image:
-    if: ${{ inputs.job_to_run == 'build-image' }}
+    if: ${{ i nputs.job_to_run == 'build-image' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Branch
@@ -30,4 +30,15 @@ jobs:
           name: build-image
           path: workspace/mailsender_image
           retention-days: 1
+
+  unit-test:
+    if: ${{ i nputs.job_to_run == 'unit-test' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Unit test run
+        run: docker run -t --entrypoint npm kk-ms:latest run test
           

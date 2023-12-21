@@ -4,11 +4,11 @@ on:
     inputs:
       job_to_run:
         type: string
-        required: true
+        required: false
 
 jobs:
   build-image:
-    if: ${{ github.event.inputs.job_to_run == 'build-image' }}
+    # if: ${{ github.event.inputs.job_to_run == 'build-image' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Branch

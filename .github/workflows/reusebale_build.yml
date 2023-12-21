@@ -5,12 +5,12 @@ on:
       job_to_run:
         type: string
         required: false
-    tag_name:
-        type: string
-        required: true
-    outputs:
-      result:
-        value: ${{ jobs.build-image.outputs.output1 }}
+      tag_name:
+          type: string
+          required: true
+    # outputs:
+    #   result:
+    #     value: ${{ jobs.build-image.outputs.output1 }}
 
 env:
   PORT: ${{ vars.ENV }}

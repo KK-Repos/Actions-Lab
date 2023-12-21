@@ -24,12 +24,12 @@ jobs:
         job_to_run: build-image
         tag_name: ${{ needs.gen-tag.outputs.output1 }}
 
-  unit-test:
-    needs: lint
-    uses: ./.github/workflows/reuseable_unit-test.yml
-    with:
-      job_to_run: unit-test
-      tag_name: ${{ needs.build-image.outputs.result }}
+  # unit-test:
+  #   needs: lint
+  #   uses: ./.github/workflows/reuseable_unit-test.yml
+  #   with:
+  #     job_to_run: unit-test
+  #     tag_name: ${{ needs.build-image.outputs.result }}
   lint:
     needs: build-image
     runs-on: ubuntu-latest

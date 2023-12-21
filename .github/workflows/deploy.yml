@@ -16,6 +16,7 @@ jobs:
         run: |
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo $TAG
   
   check-test-1:
     needs: gen-tag

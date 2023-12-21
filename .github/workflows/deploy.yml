@@ -34,12 +34,12 @@ jobs:
   #   with:
   #     job_to_run: unit-test
   #     tag_name: ${{ needs.build-image.outputs.result }}
-  lint:
-    needs: build-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        run: echo "Lint running"
+  # lint:
+  #   needs: build-image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Test
+  #       run: echo "Lint running"
   
   # build-image:
   #   runs-on: ubuntu-latest  # Adjust the runner if needed

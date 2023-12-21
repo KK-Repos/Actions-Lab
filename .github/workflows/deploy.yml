@@ -48,6 +48,17 @@ jobs:
     steps:
       - name: test
         run: echo $TAG
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: workspace
+          path: workspace
+      - name: test path
+        run: ls -a
+      - name: test env
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo $TAG
   # build-image:
   #     needs: gen-tag
   #     uses: ./.github/workflows/reusebale_build.yml

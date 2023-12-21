@@ -36,7 +36,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: workspace
-          path: workspace/vars.txt
+          path: vars.txt
       - name: test path
         run: ls
       - name: test env

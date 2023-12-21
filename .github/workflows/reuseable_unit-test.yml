@@ -13,11 +13,11 @@ jobs:
       tag: ${{inputs.tag_name}}
     steps:
       - name: print the tag name
-        run: echo ${tag}
+        run: echo ${{inputs.tag_name}}
       - name: Checkout Branch
         uses: actions/checkout@v3
         with:
           persist-credentials: false
       - name: Unit test run
-        run: docker run -t --entrypoint npm kk-ms:latest run test
+        run: docker run --entrypoint npm kk-ms:latest run test
           

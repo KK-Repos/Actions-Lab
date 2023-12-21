@@ -10,10 +10,11 @@ on:
         value: ${{ jobs.build-image.outputs.output1 }}
 
 env:
-  PORT: 3000
-  
+  PORT: ${{ vars.ENV }}
+
 jobs:
   build-image:
+    environment: test
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.create-tag-step.outputs.TAG }}

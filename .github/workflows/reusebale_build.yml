@@ -26,6 +26,8 @@ jobs:
         run: |
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo "TAG=${TAG}" >> $GITHUB_OUTPUT
+      - name: Print ENV
+        run: echo ${PORT}
       - name: Build Image
         run: |
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .

@@ -15,24 +15,20 @@ jobs:
         id: create-tag-step
         run: |
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
-          echo "TAG=${TAG}" >> $GITHUB_OUTPUT
-      - name: print the echo
-        run: |
-          concatenated_value="${{ steps.create-tag-step.outputs.TAG }} + ${{ github.ref_name }}"
-          echo $concatenated_value
+          echo "TAG=${TAG}" >> $GITHUB_ENV
   
   check-test-1:
     needs: gen-tag
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo ${{ needs.gen-tag.outputs.output1 }}
+        run: echo ${{ env.TAG }}
   check-test:
     needs: check-test-1
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo ${{ needs.gen-tag.outputs.output1 }}
+        run: echo ${{ env.TAG }}
   # build-image:
   #     needs: gen-tag
   #     uses: ./.github/workflows/reusebale_build.yml

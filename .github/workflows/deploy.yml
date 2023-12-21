@@ -6,7 +6,7 @@ env:
 jobs:
 
   build-image:
-      uses: .github/workflows/reusebale.yml@ build-image
+      uses: .github/workflows/reusebale.yml@build-image
     
   # build-image:
   #   runs-on: ubuntu-latest  # Adjust the runner if needed

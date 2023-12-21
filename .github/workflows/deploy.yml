@@ -53,14 +53,13 @@ jobs:
         with:
           name: workspace
           path: workspace
-      - name: test env
+      - name: Set TAG variable
         run: |
           TAG=$(head -n 1 workspace/vars.txt)
-          export TAG
-          source <(echo "export TAG=$TAG" >> ~/.bashrc)
+          echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
-      - name: test path
-        run: echo ${TAG}
+      - name: Test path
+        run: echo ${{ env.TAG }}
   # build-image:
   #     needs: gen-tag
   #     uses: ./.github/workflows/reusebale_build.yml

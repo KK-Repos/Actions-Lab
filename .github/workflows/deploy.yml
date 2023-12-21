@@ -14,15 +14,16 @@ jobs:
       - name: Generate a image Tag
         id: create-tag-step
         run: |
+          mkdir workspace
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo "TAG='${TAG}'" >> $GITHUB_ENV
-          echo ${TAG} >> vars.txt
+          echo ${TAG} >> workspace/vars.txt
           echo $TAG
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v2
         with:
           name: workspace
-          path: vars.txt
+          path: workspace/vars.txt
           retention-days: 1
   
   check-test-1:

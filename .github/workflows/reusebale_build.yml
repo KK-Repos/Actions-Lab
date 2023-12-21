@@ -9,6 +9,9 @@ on:
       result:
         value: ${{ jobs.build-image.outputs.output1 }}
 
+env:
+  PORT: 3000
+  
 jobs:
   build-image:
     runs-on: ubuntu-latest

@@ -4,69 +4,77 @@ on: push
 env:
   PORT: 3000
 jobs:
+  build-image:
+    uses: ./.github/workflows/reusebale_build.yml
+    with:
+      tag_name: test
 
-  gen-tag:
-    name: "Generate Tag for Image"
+  push-to-ecr:
+    needs: build-image
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.create-tag-step.outputs.TAG }}
     steps:
-      - name: Generate a image Tag
-        id: create-tag-step
+      - name: push to ECR
         run: |
-          mkdir workspace
-          TAG=$(date --utc +%Y.%m.%d-%H.%M)
-          echo ${TAG} >> vars.txt
-          echo $TAG
-      - name: Upload Data Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: workspace
-          path: vars.txt
-          retention-days: 1
+          docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+
+  # gen-tag:
+  #   name: "Generate Tag for Image"
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     output1: ${{ steps.create-tag-step.outputs.TAG }}
+  #   steps:
+  #     - name: Generate a image Tag
+  #       id: create-tag-step
+  #       run: |
+  #         mkdir workspace
+  #         TAG=$(date --utc +%Y.%m.%d-%H.%M)
+  #         echo ${TAG} >> vars.txt
+  #         echo $TAG
+  #     - name: Upload Data Artifact
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: workspace
+  #         path: vars.txt
+  #         retention-days: 1
   
-  check-test-1:
-    needs: gen-tag
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: echo $TAG
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: workspace
-          path: workspace
-      - name: test path
-        run: ls -a
-      - name: test env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo $TAG
-  check-test:
-    needs: check-test-1
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: echo $TAG
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: workspace
-          path: workspace
-      - name: Set TAG variable
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
-      - name: Test path-1
-        run: echo ${{ env.TAG }}
-      - name: Test path-2
-        run: echo ${{ env.TAG }}
-  # build-image:
-  #     needs: gen-tag
-  #     uses: ./.github/workflows/reusebale_build.yml
-  #     with:
-  #       tag_name: ${{ needs.gen-tag.outputs.output1 }}
+  # check-test-1:
+  #   needs: gen-tag
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: test
+  #       run: echo $TAG
+  #     - name: Download Data Artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: workspace
+  #         path: workspace
+  #     - name: test path
+  #       run: ls -a
+  #     - name: test env
+  #       run: |
+  #         TAG=$(head -n 1 workspace/vars.txt)
+  #         echo $TAG
+  # check-test:
+  #   needs: check-test-1
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: test
+  #       run: echo $TAG
+  #     - name: Download Data Artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: workspace
+  #         path: workspace
+  #     - name: Set TAG variable
+  #       run: |
+  #         TAG=$(head -n 1 workspace/vars.txt)
+  #         echo "TAG=$TAG" >> $GITHUB_ENV
+  #         echo $TAG
+  #     - name: Test path-1
+  #       run: echo ${{ env.TAG }}
+  #     - name: Test path-2
+  #       run: echo ${{ env.TAG }}
 
   # unit-test:
   #   needs: build-image
@@ -123,28 +131,20 @@ jobs:
   #       run: docker load -i workspace/mailsender_image
   #     - name: run unit test
   #       run: docker run -t --entrypoint npm kk-ms:latest run test
-  # push-to-ecr:
-  #   environment: prod
-  #   needs: unit-test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Download Data Artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: build-image
-  #         path: workspace
-  #     - name: Get docker image
-  #       run: docker load -i workspace/mailsender_image
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: ${{ vars.AWS_REGION }}
-  #     - name: Login to Amazon ECR
-  #       id: login-ecr
-  #       uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
-  #     - name: push to ECR
-  #       run: |
-  #         docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-  #         docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+
+# - name: Download Data Artifact
+#   uses: actions/download-artifact@v2
+#   with:
+#     name: build-image
+#     path: workspace
+# - name: Get docker image
+#   run: docker load -i workspace/mailsender_image
+# - name: Configure AWS credentials
+#   uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+#   with:
+#     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#     aws-region: ${{ vars.AWS_REGION }}
+# - name: Login to Amazon ECR
+#   id: login-ecr
+#   uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a

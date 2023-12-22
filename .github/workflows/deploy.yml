@@ -5,6 +5,8 @@ env:
   PORT: 3000
 jobs:
   build-image:
+    permissions:
+      id-token: write
     uses: ./.github/workflows/reusebale_build.yml
     with:
       tag_name: test

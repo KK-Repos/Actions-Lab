@@ -5,14 +5,13 @@ on:
       tag_name:
           type: string
           required: true
-
 env:
   PORT: ${{ vars.ENV }}
 
 jobs:
   build-image:
     permissions:
-      id-token: write 
+      id-token: write
     environment: test
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +36,7 @@ jobs:
           aws-region: "ap-south-1"
 
       - name: Login to Amazon ECR
-        id: login-ecr
+        id: id-token
         uses: aws-actions/amazon-ecr-login@v2
       - name:  push to ECR
         run: |

@@ -11,6 +11,8 @@ env:
 
 jobs:
   build-image:
+    permissions:
+      id-token: write 
     environment: test
     runs-on: ubuntu-latest
     steps:
@@ -27,11 +29,13 @@ jobs:
       - name: Build Image
         run: |
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::087229364167:role/Test
           aws-region: "ap-south-1"
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2

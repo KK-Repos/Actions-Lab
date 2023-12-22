@@ -7,6 +7,7 @@ jobs:
   build-image:
     permissions:
       id-token: write
+      contents: read
     environment: test
     runs-on: ubuntu-latest
     steps:

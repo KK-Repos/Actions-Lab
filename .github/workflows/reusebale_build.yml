@@ -29,19 +29,19 @@ jobs:
         run: |
           docker build --build-arg PORT=${PORT} -t kk-ms:latest .
 
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::087229364167:role/Test
-          aws-region: "ap-south-1"
+      # - name: configure aws credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: arn:aws:iam::087229364167:role/Test
+      #     aws-region: "ap-south-1"
 
-      - name: Login to Amazon ECR
-        id: id-token
-        uses: aws-actions/amazon-ecr-login@v2
-      - name:  push to ECR
-        run: |
-          docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+      # - name: Login to Amazon ECR
+      #   id: id-token
+      #   uses: aws-actions/amazon-ecr-login@v2
+      # - name:  push to ECR
+      #   run: |
+      #     docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+      #     docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
       # - name: Persist Image
       #   run: |
       #     docker save -o workspace/mailsender_image kk-ms:latest

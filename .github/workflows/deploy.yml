@@ -7,7 +7,7 @@ jobs:
   build-image:
     permissions:
       id-token: write
-      contents: read
+      contents: write
     environment: test
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::087229364167:role/kk-test
+          role-to-assume: arn:aws:iam::087229364167:role/test-kk
           aws-region: "ap-south-1"
 
       - name: Login to Amazon ECR

@@ -8,16 +8,6 @@ jobs:
     uses: ./.github/workflows/reusebale_build.yml
     with:
       tag_name: test
-
-  push-to-ecr:
-    needs: build-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: push to ECR
-        run: |
-          docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-
   # gen-tag:
   #   name: "Generate Tag for Image"
   #   runs-on: ubuntu-latest

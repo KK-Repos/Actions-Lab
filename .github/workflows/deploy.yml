@@ -66,7 +66,7 @@ jobs:
           echo $TAG
       - name: push to ECR
         run: |
-          TAG=$(head -n 1 workspace/vars.txt) && docker tag kl-mailsender:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
+          docker tag kl-mailsender:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
           docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
 
   internal_cluster_deployment:

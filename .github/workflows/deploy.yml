@@ -6,7 +6,7 @@ env:
 jobs:
 
   gen-tag:
-    name: "Generate Tag for Image"
+    name: "Generate Tag"
     runs-on: ubuntu-latest
     steps:
       - name: Generate a image Tag

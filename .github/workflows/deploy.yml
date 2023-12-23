@@ -6,6 +6,7 @@ env:
 jobs:
 
   gen-tag:
+    environment: prod
     name: "Generate Tag"
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +29,6 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    environment: test
     runs-on: ubuntu-latest
     steps:
       - name: test

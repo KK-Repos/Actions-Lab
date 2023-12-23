@@ -76,6 +76,14 @@ jobs:
     needs: build-image
     runs-on: ubuntu-latest
     steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::087229364167:role/test-kk
+          aws-region: "ap-south-1"
+      - name: Login to Amazon ECR
+        id: id-token
+        uses: aws-actions/amazon-ecr-login@v2
       - name: test
         run: echo $TAG
       - name: Download Data Artifact

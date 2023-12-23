@@ -6,7 +6,7 @@ env:
 jobs:
 
   gen-tag:
-    environment: prod
+    # environment: prod
     name: "Generate Tag"
     runs-on: ubuntu-latest
     steps:

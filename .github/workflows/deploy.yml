@@ -73,6 +73,9 @@ jobs:
 
   
   internal-deploy:
+    permissions:
+      id-token: write
+      contents: write
     needs: build-image
     runs-on: ubuntu-latest
     steps:

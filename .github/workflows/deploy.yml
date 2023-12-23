@@ -73,6 +73,7 @@ jobs:
 
   
   internal-deploy:
+    environment: prod
     permissions:
       id-token: write
       contents: write

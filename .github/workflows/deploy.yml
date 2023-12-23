@@ -2,44 +2,9 @@ name: Deploy-Actions 🔥
 on: push
 
 env:
-  PORT: 3000  # build-image:
-  #   permissions:
-  #     id-token: write
-  #     contents: write
-  #   environment: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Branch
-  #       uses: actions/checkout@v3
-  #       with:
-  #         persist-credentials: false
-  #     - name: create a workspace
-  #       run: mkdir -p workspace
-  #     - name: Build Image
-  #       run: |
-  #         docker build --build-arg PORT=${PORT} -t kk-ms:latest .
-
-  #     - name: configure aws credentials
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         role-to-assume: arn:aws:iam::087229364167:role/test-kk
-  #         aws-region: "ap-south-1"
-
-  #     - name: Login to Amazon ECR
-  #       id: id-token
-  #       uses: aws-actions/amazon-ecr-login@v2
-  #     - name:  push to ECR
-  #       run: |
-  #         docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-  #         docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
+  PORT: 3000  
 jobs:
 
-  # build-image:
-  #   permissions:
-  #     id-token: write
-  #   uses: ./.github/workflows/reusebale_build.yml
-  #   with:
-  #     tag_name: test
   gen-tag:
     name: "Generate Tag for Image"
     runs-on: ubuntu-latest
@@ -57,9 +22,55 @@ jobs:
           name: workspace
           path: vars.txt
           retention-days: 1
+
+  build-image:
+    permissions:
+      id-token: write
+      contents: write
+    environment: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo $TAG
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: workspace
+          path: workspace
+      - name: test path
+        run: ls -a
+      - name: test env
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: create a workspace
+        run: mkdir -p workspace
+      - name: Build Image
+        run: |
+          docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::087229364167:role/test-kk
+          aws-region: "ap-south-1"
+
+      - name: Login to Amazon ECR
+        id: id-token
+        uses: aws-actions/amazon-ecr-login@v2
+      - name:  push to ECR
+        run: |
+          docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${TAG}
+          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${TAG}
+
   
   internal-deploy:
-    needs: gen-tag
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
       - name: test

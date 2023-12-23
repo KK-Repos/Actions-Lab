@@ -8,7 +8,7 @@ on:
 
 jobs:
   unit-test:
-    runs-on: test
+    runs-on: ubuntu-latest
     steps:
       - name: Download Data Artifact
         uses: actions/download-artifact@v3

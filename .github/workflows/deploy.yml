@@ -9,7 +9,7 @@ jobs:
 
   create-tag:
     name: Generate Tag for Image
-    runs-on: kl-ms
+    runs-on: ubuntu-latest
     steps:
       - name: Generate a image Tag
         run: |
@@ -44,7 +44,7 @@ jobs:
       contents: write
     name: Image push to ECR repo
     needs: [build-image,unit-test]
-    runs-on: kl-ms
+    runs-on: ubuntu-latest
     steps:
       - name: Download Data Artifact
         uses: actions/download-artifact@v3
@@ -69,12 +69,12 @@ jobs:
           TAG=$(head -n 1 workspace/vars.txt) && docker tag kl-mailsender:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
           docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
 
-  internal-deploy:
+  internal_cluster_deployment:
     environment: prod
     permissions:
       id-token: write
       contents: write
-    needs: build-image
+    needs: [push-to-ecr]
     runs-on: ubuntu-latest
     steps:
       - name: configure aws credentials
@@ -119,11 +119,16 @@ jobs:
       - name: update userpicker-8
         run: echo $TAG   
 
-  main-deploy:
-    needs: internal-deploy
+  main_cluster_deployment:
+    needs: [push-to-ecr]
     runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
 
-
+  icp_cluster_deployment:
+    needs: [push-to-ecr]
+    runs-on: ubuntu-latest
+    steps:
+      - name : test env for tag
+        run: echo $TAG

@@ -2,7 +2,9 @@ name: Deploy-Actions 🔥
 on: push
 
 env:
-  PORT: 3000  
+  PORT: 3000 
+  AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
+  AWS_REGION: ap-south-1
 jobs:
 
   gen-tag:
@@ -28,7 +30,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    environment: test
+    environment: prod
     runs-on: ubuntu-latest
     steps:
       - name: test
@@ -83,13 +85,16 @@ jobs:
           path: workspace
       - name: test path
         run: ls -a
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
       - name: test env
         run: |
           TAG=$(head -n 1 workspace/vars.txt)
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
-      - name: update userpicker-1
-        run: echo $TAG
+      - name: Update kk-test-fn lambda
+        run: aws lambda update-function-code --function-name kk-test-fn --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
       - name: update userpicker-2
         run: echo $TAG
       - name: update userpicker-3

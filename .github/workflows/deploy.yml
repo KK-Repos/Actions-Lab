@@ -107,8 +107,8 @@ jobs:
           echo $TAG
       - name: Update kk-test-fn lambda
         run: |
-          aws lambda update-function-code
-            --function-name kk-test-fn 
+          aws lambda update-function-code \
+            --function-name kk-test-fn  \
             --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
       - name: update userpicker-2
         run: echo $TAG

@@ -85,9 +85,9 @@ jobs:
           path: workspace
       - name: test path
         run: ls -a
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v2
       - name: test env
         run: |
           TAG=$(head -n 1 workspace/vars.txt)

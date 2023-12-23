@@ -7,71 +7,68 @@ env:
   AWS_REGION: ap-south-1
 jobs:
 
-  gen-tag:
-    name: "Generate Tag"
-    runs-on: ubuntu-latest
+  create-tag:
+    name: Generate Tag for Image
+    runs-on: kl-ms
     steps:
       - name: Generate a image Tag
-        id: create-tag-step
         run: |
+          if [ -d "workspace" ]; then sudo rm -r "workspace"; fi
           mkdir workspace
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo ${TAG} >> vars.txt
-          echo $TAG
       - name: Upload Data Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: workspace
           path: vars.txt
           retention-days: 1
 
   build-image:
-    environment: prod
-    needs: gen-tag
+    name: Build Image
+    needs: create-tag
+    uses: ./.github/workflows/reusebale_build.yml
+    with:
+      artifact_name: workspace
+
+  unit-test:
+    name: Unit Test
+    needs: build-image
+    uses: ./.github/workflows/reuseable_unit-test.yml
+    with:
+      artifact_name: workspace
+
+  push-to-ecr:
     permissions:
       id-token: write
       contents: write
-    runs-on: ubuntu-latest
+    name: Image push to ECR repo
+    needs: [build-image,unit-test]
+    runs-on: kl-ms
     steps:
-      - name: test
-        run: echo $TAG
       - name: Download Data Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: workspace
           path: workspace
-      - name: test path
-        run: ls -a
-      - name: test env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
-      - name: Checkout Branch
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: create a workspace
-        run: mkdir -p workspace
-      - name: Build Image
-        run: |
-          docker build --build-arg PORT=${PORT} -t kk-ms:${TAG} .
-
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::087229364167:role/test-kk
           aws-region: "ap-south-1"
-
       - name: Login to Amazon ECR
-        id: id-token
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      - name:  push to ECR
+      - name: Set tag env
         run: |
-          docker tag kk-ms:${TAG} 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${TAG}
-          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:${TAG}
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG
+      - name: push to ECR
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt) && docker tag kl-mailsender:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
+          docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
 
-  
   internal-deploy:
     environment: prod
     permissions:
@@ -97,9 +94,6 @@ jobs:
           path: workspace
       - name: test path
         run: ls -a
-      # - name: Login to Amazon ECR
-      #   id: login-ecr
-      #   uses: aws-actions/amazon-ecr-login@v2
       - name: test env
         run: |
           TAG=$(head -n 1 workspace/vars.txt)
@@ -132,96 +126,4 @@ jobs:
       - name : test env for tag
         run: echo $TAG
 
-  # check-test:
-  #   needs: check-test-1
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: test
-  #       run: echo $TAG
-  #     - name: Download Data Artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: workspace
-  #         path: workspace
-  #     - name: Set TAG variable
-  #       run: |
-  #         TAG=$(head -n 1 workspace/vars.txt)
-  #         echo "TAG=$TAG" >> $GITHUB_ENV
-  #         echo $TAG
-  #     - name: Test path-1
-  #       run: echo ${{ env.TAG }}
-  #     - name: Test path-2
-  #       run: echo ${{ env.TAG }}
 
-  # unit-test:
-  #   needs: build-image
-  #   uses: ./.github/workflows/reuseable_unit-test.yml
-  #   with:
-  #     tag_name: ${{ needs.gen-tag.outputs.output1 }}
-  # lint:
-  #   needs: build-image
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Test
-  #       run: echo "Lint running"
-  
-  # build-image:
-  #   runs-on: ubuntu-latest  # Adjust the runner if needed
-  #   outputs:
-  #     output1: ${{ steps.create-tag-step.outputs.TAG }}
-  #   steps:
-  #     - name: Generate and set tag
-  #       id: create-tag-step
-  #       run: |
-  #         # Use UTC for consistent time-based tags across regions
-  #         TAG=$(date --utc +%Y.%m.%d-%H.%M)
-  #         # Set the tag as an environment variable for subsequent steps
-  #         echo "TAG=${TAG}" >> $GITHUB_OUTPUT
-  #     - name: Check out repository
-  #       uses: actions/checkout@v3
-  #     - name: Build image
-  #       uses: .github/workflows/reusebale.yml
-  
-  # check:
-  #   runs-on: ubuntu-latest
-  #   needs: create-tag
-  #   steps:
-  #     - env:
-  #         OUTPUT1: ${{needs.create-tag.outputs.output1}}
-  #       run: echo "$OUTPUT1" 
-
-          
-  # unit-test:
-  #   needs: build-image
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Branch
-  #       uses: actions/checkout@v3
-  #       with:
-  #         persist-credentials: false
-  #     - name: Download Data Artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: build-image
-  #         path: workspace
-  #     - name: Get docker image
-  #       run: docker load -i workspace/mailsender_image
-  #     - name: run unit test
-  #       run: docker run -t --entrypoint npm kk-ms:latest run test
-
-# - name: Download Data Artifact
-#   uses: actions/download-artifact@v2
-#   with:
-#     name: build-image
-#     path: workspace
-# - name: Get docker image
-#   run: docker load -i workspace/mailsender_image
-# - name: Configure AWS credentials
-#   uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
-#   with:
-#     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#     aws-region: ${{ vars.AWS_REGION }}
-# - name: Login to Amazon ECR
-#   id: login-ecr
-#   uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a

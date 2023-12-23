@@ -2,50 +2,27 @@ name: Reuseable-Workflow
 on:
   workflow_call:
     inputs:
-      tag_name:
-          type: string
-          required: true
-env:
-  PORT: ${{ vars.ENV }}
+      artifact_name:
+        type: string
+        required: true
 
 jobs:
   build-image:
-    environment: test
-    runs-on: ubuntu-latest
+    runs-on: test
     steps:
-      - name: Checking the tag name
-        run: echo ${{inputs.tag_name}}
       - name: Checkout Branch
         uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - name: create a workspace
-        run: mkdir -p workspace
-      - name: Print ENV
-        run: echo ${PORT}
-      - name: Build Image
-        run: |
-          docker build --build-arg PORT=${PORT} -t kk-ms:latest .
-
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v3
         with:
-          role-to-assume: arn:aws:iam::087229364167:role/Test
-          aws-region: "ap-south-1"
-
-      - name: Login to Amazon ECR
-        id: id-token
-        uses: aws-actions/amazon-ecr-login@v2
-      - name:  push to ECR
+          name: ${{inputs.artifact_name}}
+          path: ${{inputs.artifact_name}}
+      - name: Set tag env
         run: |
-          docker tag kk-ms:latest 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-          docker push 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo:kk-img-tag
-      # - name: Persist Image
-      #   run: |
-      #     docker save -o workspace/mailsender_image kk-ms:latest
-      # - name: Upload Data Artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: build-image
-      #     path: workspace/mailsender_image
-      #     retention-days: 1
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG
+      - name: Build image
+        run: docker build --build-arg PORT=${PORT} -t kk-ms:${{env.TAG}} .

@@ -1,23 +1,25 @@
-name: Reuseable-Workflow
+name: Reusebale-Unit-Test
 on:
   workflow_call:
     inputs:
-      tag_name:
+      artifact_name:
         type: string
         required: true
 
 jobs:
   unit-test:
-    runs-on: ubuntu-latest
-    env:
-      tag: ${{inputs.tag_name}}
+    runs-on: test
     steps:
-      - name: print the tag name
-        run: echo ${{inputs.tag_name}}
-      - name: Checkout Branch
-        uses: actions/checkout@v3
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v3
         with:
-          persist-credentials: false
+          name: ${{inputs.artifact_name}}
+          path: ${{inputs.artifact_name}}
+      - name: Set tag env
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG
       - name: Unit test run
-        run: docker run --entrypoint npm kk-ms:latest run test
+        run: docker run --entrypoint npm kk-ms:${{env.TAG}} run test
           

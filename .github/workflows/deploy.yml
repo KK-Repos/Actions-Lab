@@ -26,11 +26,11 @@ jobs:
           retention-days: 1
 
   build-image:
+    environment: prod
     needs: gen-tag
     permissions:
       id-token: write
       contents: write
-    environment: prod
     runs-on: ubuntu-latest
     steps:
       - name: test

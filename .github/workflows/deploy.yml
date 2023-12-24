@@ -47,11 +47,18 @@ jobs:
     runs-on: kk-ms
     environment: prod
     steps:
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: workspace
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
+      # - name: Download Data Artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: workspace
+      #     path: workspace
+      # - name: Set tag env
+      #   run: |
+      #     TAG=$(head -n 1 workspace/vars.txt)
+      #     echo "TAG=$TAG" >> $GITHUB_ENV
+      #     echo $TAG
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -60,11 +67,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      - name: Set tag env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+
       - name: push to ECR
         run: |
           docker tag kk-ms:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}

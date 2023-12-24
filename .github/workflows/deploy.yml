@@ -6,24 +6,18 @@ env:
   AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
   AWS_REGION: ap-south-1
 jobs:
-  slack-notify-start:
-    runs-on: kk-ms
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Send Slack notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
-        SLACK_TITLE: Deployment Started
-        SLACK_MESSAGE: 'MS :rocket:'
-        SLACK_USERNAME: kk-bot
-        SLACK_FOOTER: kk Github Actions
-        SLACK_ICON: https:///app.klenty.com/new_assets/lib/img/kl_new_pink.png
-        MSG_MINIMAL: message,commit
+    slackNotification:
+      name: Slack Notification
+      runs-on: kk-ms
+      steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: https://hooks.slack.com/services/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
 
   create-tag:
-    needs: slack-notify-start
+    needs: slackNotification
     name: Generate Tag for Image
     runs-on: kk-ms
     steps:

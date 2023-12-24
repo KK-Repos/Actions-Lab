@@ -76,6 +76,8 @@ jobs:
       contents: write
     runs-on: kk-ms
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -112,6 +114,8 @@ jobs:
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name : test env for tag
         run: echo $TAG
       - name:  Get the tag
@@ -122,6 +126,8 @@ jobs:
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name : test env for tag
         run: echo $TAG
       - name:  Get the tag

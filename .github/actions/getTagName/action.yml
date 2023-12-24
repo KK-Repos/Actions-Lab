@@ -1,20 +1,12 @@
 name: 'Get Tag Name'
-inputs:
-  artifact_name:  # id of input
-    type: string
-    required: true
 runs:
   using: "composite"
   steps:
-    - name: Test name
-      run: echo ${{ inputs.artifact_name }}
-      shell: bash
     - name: Download Data Artifact
-      shell: bash
       uses: actions/download-artifact@v3
       with:
-        name:  ${{ inputs.artifact_name }}
-        path:  ${{ inputs.artifact_name }}
+        name: workspace
+        path: workspace
     - name: Set tag env
       run: |
         TAG=$(head -n 1 workspace/vars.txt)

@@ -18,8 +18,5 @@ jobs:
           persist-credentials: false
       - name:  Get the tag
         uses: ./.github/actions/getTagName
-        with:
-          name: ${{inputs.artifact_name}}
-
       - name: Build image
         run: docker build --build-arg PORT=${{env.PORT}} -t kk-ms:${{env.TAG}} .

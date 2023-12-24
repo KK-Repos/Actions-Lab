@@ -25,6 +25,8 @@ jobs:
     name: Generate Tag for Image
     runs-on: kk-ms
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Generate a image Tag
         run: |
           if [ -d "workspace" ]; then sudo rm -r "workspace"; fi

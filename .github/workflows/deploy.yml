@@ -67,7 +67,7 @@ jobs:
           echo $TAG
       - name: push to ECR
         run: |
-          docker tag kl-ms:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
+          docker tag kk-ms:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
           docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
 
   internal_cluster_deployment:

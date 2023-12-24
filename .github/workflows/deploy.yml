@@ -72,7 +72,7 @@ jobs:
 
   internal_cluster_deployment:
     needs: push-to-ecr
-    environment: prod
+    # environment: prod
     permissions:
       id-token: write
       contents: write
@@ -121,7 +121,7 @@ jobs:
         run: echo $TAG   
 
   main_cluster_deployment:
-    environment: prod
+    # environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
@@ -140,7 +140,7 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
   icp_cluster_deployment:
-    environment: prod
+    # environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:

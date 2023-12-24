@@ -8,7 +8,9 @@ runs:
   steps:
     - name: Test name
       run: echo ${{ inputs.artifact_name }}
+      shell: bash
     - name: Download Data Artifact
+      shell: bash
       uses: actions/download-artifact@v3
       with:
         name:  ${{ inputs.artifact_name }}

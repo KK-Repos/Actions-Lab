@@ -89,7 +89,7 @@ jobs:
       - name: test
         run: echo $TAG
       - name: Download Data Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: workspace
           path: workspace
@@ -121,13 +121,14 @@ jobs:
         run: echo $TAG   
 
   main_cluster_deployment:
+    environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
       - name: Download Data Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: workspace
           path: workspace
@@ -139,13 +140,14 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
   icp_cluster_deployment:
+    environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
       - name: Download Data Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: workspace
           path: workspace

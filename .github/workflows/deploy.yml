@@ -6,15 +6,15 @@ env:
   AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
   AWS_REGION: ap-south-1
 jobs:
-    slackNotification:
-      name: Slack Notification
-      runs-on: kk-ms
-      steps:
-      - uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: https://hooks.slack.com/services/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
+  slackNotification:
+    name: Slack Notification
+    runs-on: kk-ms
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
 
   create-tag:
     needs: slackNotification

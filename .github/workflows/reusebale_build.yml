@@ -16,15 +16,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
         with:
           name: ${{inputs.artifact_name}}
-          path: ${{inputs.artifact_name}}
-      - name: Set tag env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+
       - name: Build image
         run: docker build --build-arg PORT=${{env.PORT}} -t kk-ms:${{env.TAG}} .

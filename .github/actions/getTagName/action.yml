@@ -1,21 +1,18 @@
 name: 'Get Tag Name'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  artifact_name:  # id of input
+    type: string
     required: true
-    default: 'World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: "composite"
   steps:
+    - name: Test name
+      run: echo ${{ inputs.artifact_name }}
     - name: Download Data Artifact
       uses: actions/download-artifact@v3
       with:
-        name: workspace
-        path: workspace
+        name:  ${{ inputs.artifact_name }}
+        path:  ${{ inputs.artifact_name }}
     - name: Set tag env
       run: |
         TAG=$(head -n 1 workspace/vars.txt)

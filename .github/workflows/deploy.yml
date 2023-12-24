@@ -21,7 +21,7 @@ jobs:
         MSG_MINIMAL: message,commit
 
   create-tag:
-    needs: 
+    needs: slack-notify-start
     name: Generate Tag for Image
     runs-on: kk-ms
     steps:

@@ -109,40 +109,22 @@ jobs:
         run: echo $TAG   
 
   main_cluster_deployment:
-    # environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: workspace
-      - name: test path
-        run: ls -a
-      - name: test env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
+      - name : test env for tag
+        run: echo $TAG
   icp_cluster_deployment:
-    # environment: prod
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: workspace
-      - name: test path
-        run: ls -a
-      - name: test env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
+      - name : test env for tag
+        run: echo $TAG

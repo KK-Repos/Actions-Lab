@@ -47,6 +47,10 @@ jobs:
     runs-on: kk-ms
     environment: prod
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - name:  Get the tag
         uses: ./.github/actions/getTagName
       # - name: Download Data Artifact

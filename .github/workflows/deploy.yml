@@ -9,6 +9,8 @@ jobs:
   slack-notify-start:
     runs-on: kk-ms
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Send Slack notification
       uses: rtCamp/action-slack-notify@v2
       env:
@@ -25,8 +27,6 @@ jobs:
     name: Generate Tag for Image
     runs-on: kk-ms
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Generate a image Tag
         run: |
           if [ -d "workspace" ]; then sudo rm -r "workspace"; fi

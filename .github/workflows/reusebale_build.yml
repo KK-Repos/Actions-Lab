@@ -10,7 +10,7 @@ env:
   PORT: 3000
 jobs:
   build-image:
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3

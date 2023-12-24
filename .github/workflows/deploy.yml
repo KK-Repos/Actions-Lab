@@ -9,7 +9,7 @@ jobs:
 
   create-tag:
     name: Generate Tag for Image
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name: Generate a image Tag
         run: |
@@ -44,7 +44,7 @@ jobs:
       contents: write
     name: Image push to ECR repo
     needs: [build-image,unit-test]
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name: Download Data Artifact
         uses: actions/download-artifact@v3
@@ -75,7 +75,7 @@ jobs:
       id-token: write
       contents: write
     needs: [push-to-ecr]
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -121,14 +121,14 @@ jobs:
 
   main_cluster_deployment:
     needs: [push-to-ecr]
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name : test env for tag
         run: echo $TAG
 
   icp_cluster_deployment:
     needs: [push-to-ecr]
-    runs-on: ubuntu-latest
+    runs-on: kk-ms
     steps:
       - name : test env for tag
         run: echo $TAG

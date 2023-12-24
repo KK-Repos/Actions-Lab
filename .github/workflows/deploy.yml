@@ -28,13 +28,11 @@ jobs:
     name: Build Image
     needs: create-tag
     uses: ./.github/workflows/reusebale_build.yml
-    
+
   unit-test:
     name: Unit Test
     needs: build-image
     uses: ./.github/workflows/reuseable_unit-test.yml
-    with:
-      artifact_name: workspace
 
   push-to-ecr:
     permissions:
@@ -131,4 +129,6 @@ jobs:
       - name:  Get the tag
         uses: ./.github/actions/getTagName
       - name : test env for tag
+        run: echo $TAG
+      - name : test env for tag-1
         run: echo $TAG

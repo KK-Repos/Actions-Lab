@@ -10,16 +10,8 @@ jobs:
   unit-test:
     runs-on: kk-ms
     steps:
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{inputs.artifact_name}}
-          path: ${{inputs.artifact_name}}
-      - name: Set tag env
-        run: |
-          TAG=$(head -n 1 workspace/vars.txt)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
       - name: Unit test run
         run: docker images
       - name: Unit test run

@@ -122,7 +122,7 @@ jobs:
 
   main_cluster_deployment:
     needs: push-to-ecr
-    runs-on: kk-ms
+    runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG
@@ -140,7 +140,7 @@ jobs:
           echo $TAG
   icp_cluster_deployment:
     needs: push-to-ecr
-    runs-on: kk-ms
+    runs-on: ubuntu-latest
     steps:
       - name : test env for tag
         run: echo $TAG

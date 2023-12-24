@@ -101,7 +101,7 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
       - name: Update kk-test-fn lambda
-        run: |kk-ms
+        run: kk-ms
           aws lambda update-function-code \
             --function-name kk-test-fn  \
             --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null

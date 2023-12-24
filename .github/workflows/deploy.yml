@@ -101,7 +101,7 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
       - name: Update kk-test-fn lambda
-        run: kk-ms
+        run: |
           aws lambda update-function-code \
             --function-name kk-test-fn  \
             --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
@@ -126,10 +126,33 @@ jobs:
     steps:
       - name : test env for tag
         run: echo $TAG
-
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: workspace
+          path: workspace
+      - name: test path
+        run: ls -a
+      - name: test env
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG
   icp_cluster_deployment:
     needs: [push-to-ecr]
     runs-on: kk-ms
     steps:
       - name : test env for tag
         run: echo $TAG
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: workspace
+          path: workspace
+      - name: test path
+        run: ls -a
+      - name: test env
+        run: |
+          TAG=$(head -n 1 workspace/vars.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo $TAG

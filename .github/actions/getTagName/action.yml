@@ -1,0 +1,24 @@
+name: 'Get Tag Name'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - name: Download Data Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: workspace
+        path: workspace
+    - name: Set tag env
+      run: |
+        TAG=$(head -n 1 workspace/vars.txt)
+        echo "TAG=$TAG" >> $GITHUB_ENV
+        echo $TAG
+      shell: bash

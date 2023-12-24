@@ -45,6 +45,7 @@ jobs:
     name: Image push to ECR repo
     needs: [build-image,unit-test]
     runs-on: kk-ms
+    environment: prod
     steps:
       - name: Download Data Artifact
         uses: actions/download-artifact@v3

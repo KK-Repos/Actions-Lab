@@ -1,5 +1,5 @@
 name: Reuseable-Workflow
-on: workflow_call:
+on: workflow_call
 
 env:
   PORT: 3000

@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Slack Notification
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy started"}' https://hooks.slack.com/services/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
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/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
 
   create-tag:
     needs: slackNotification

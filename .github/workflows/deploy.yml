@@ -12,9 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy started"}' https://hooks.slack.com/services/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
 
   create-tag:
     needs: slackNotification

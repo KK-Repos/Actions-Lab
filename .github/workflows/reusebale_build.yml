@@ -5,7 +5,7 @@ env:
   PORT: 3000
 jobs:
   build-image:
-    runs-on: ${{ github.ref_name == 'master' && 'kk-ms' || fromJSON('["self-hosted"]') }}
+    runs-on: ${{ github.ref_name == 'master' && 'ubuntu-latest' || fromJSON('["kk-ms"]') }}
     steps:
       - name: Check env name
         run:  echo ${{inputs.tag}}

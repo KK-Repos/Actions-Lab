@@ -91,7 +91,7 @@ jobs:
       - name: test
         run: echo $TAG
       - name: test
-        run: echo pwd
+        run: echo ${{ github.workspace }}
       - name: Define function names array
         run: |
           bash .github/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG=${{env.TAG}} AWS_REGION=${{env.AWS_REGION}}

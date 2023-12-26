@@ -69,7 +69,7 @@ jobs:
           docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
 
   internal_cluster_deployment:
-    # needs: push-to-ecr
+    needs: push-to-ecr
     # environment: prod
     permissions:
       id-token: write

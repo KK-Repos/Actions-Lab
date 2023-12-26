@@ -33,6 +33,8 @@ jobs:
     steps:
       - name: Print tag env
         run: echo ${{env.TAG}}
+      - name: Print tag env
+        run: echo ${{vars.TAG}}
   # build-image:
   #   name: Build Image
   #   needs: create-tag

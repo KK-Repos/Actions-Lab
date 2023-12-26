@@ -17,10 +17,13 @@ while [[ $# -gt 0 ]]; do
   shift 2
 done
 
+
+echo $AWS_ECR_ACCOUNT_URL
+echo $AWS_ECR_REPO
+
+
 # Define the array of function names
-functions=(
-    "kk-test-fn"
-)
+functions=("kk-test-fn")
 
 # Iterate through the array and update each function
 for function in "${functions[@]}"; do

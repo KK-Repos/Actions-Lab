@@ -90,9 +90,10 @@ jobs:
         uses: ./.github/actions/getTagName
       - name: test
         run: echo $TAG
+      - name: test
+        run: echo pwd
       - name: Define function names array
         run: |
-          chmod ugo+x .github/update-fn.sh
           bash .github/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG=${{env.TAG}} AWS_REGION=${{env.AWS_REGION}}
 
       # - name: Update kk-test-fn lambda

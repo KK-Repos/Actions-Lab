@@ -90,11 +90,30 @@ jobs:
         uses: ./.github/actions/getTagName
       - name: test
         run: echo $TAG
-      - name: Update kk-test-fn lambda
+      - name: Define function names array
         run: |
-          aws lambda update-function-code \
-            --function-name kk-test-fn  \
-            --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
+          functions=(
+            "kk-test-fn"
+          )
+      - name: Update Lambda functions
+        run: |
+          for function in "${functions[@]}"; do
+            aws lambda update-function-code \
+                --function-name "$function" \
+                --image-uri "$AWS_ECR_ACCOUNT_URL/$AWS_ECR_REPO:${TAG}" \
+                --region "$AWS_REGION" > /dev/null
+
+            if [[ $? -ne 0 ]]; then
+              echo "Error updating function: $function"
+            else
+              echo "Function updated successfully: $function"
+            fi
+          done
+      # - name: Update kk-test-fn lambda
+      #   run: |
+      #     aws lambda update-function-code \
+      #       --function-name kk-test-fn  \
+      #       --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
  
 
   # main_cluster_deployment:

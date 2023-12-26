@@ -20,6 +20,7 @@ done
 
 echo $AWS_ECR_ACCOUNT_URL
 echo $AWS_ECR_REPO
+echo "region is $AWS_REGION"
 
 
 # Define the array of function names

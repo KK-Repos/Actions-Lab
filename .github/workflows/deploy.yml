@@ -86,15 +86,15 @@ jobs:
       - name: Login to Amazon ECR
         id: id-token
         uses: aws-actions/amazon-ecr-login@v2
-      - name:  Get the tag
-        uses: ./.github/actions/getTagName
+      # - name:  Get the tag
+      #   uses: ./.github/actions/getTagName
       - name: test
         run: echo $TAG
       - name: test
         run: echo ${{ github.workspace }}
       - name: Define function names array
         run: |
-          bash .github/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG="2023.12.26-15.18" AWS_REGION=${{env.AWS_REGION}}
+          bash /Actions-Lab/.github/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG="2023.12.26-15.18" AWS_REGION=${{env.AWS_REGION}}
 
       # - name: Update kk-test-fn lambda
       #   run: |

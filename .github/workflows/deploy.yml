@@ -3,7 +3,7 @@ on: push
 
 env:
   PORT: 3000 
-  AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
+  AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com
   AWS_REGION: ap-south-1
   TAG: ${{ vars.TAG }}
 
@@ -94,7 +94,7 @@ jobs:
         run: echo ${{ github.workspace }}
       - name: Define function names array
         run: |
-          bash ./.github/scripts/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG=${{env.TAG}} AWS_REGION=${{env.AWS_REGION}}
+          bash ./.github/scripts/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO="kk-ms-repo" TAG=${{env.TAG}} AWS_REGION=${{env.AWS_REGION}}
 
       # - name: Update kk-test-fn lambda
       #   run: |

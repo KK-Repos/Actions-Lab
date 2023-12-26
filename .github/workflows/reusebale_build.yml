@@ -1,12 +1,18 @@
 name: Reuseable-Workflow
 on: workflow_call
 
+inputs:
+  tag:
+     required: false
+     default: "dev"
 env:
   PORT: 3000
 jobs:
   build-image:
-    runs-on: kk-ms
+    runs-on: ${{ inputs.tag == "production" && 'kk-ms' || ubuntu-latest }}
     steps:
+      - name: Check env name
+        run:  echo ${{inputs.tag}}
       - name: Checkout Branch
         uses: actions/checkout@v3
         with:

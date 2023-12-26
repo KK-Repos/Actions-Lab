@@ -6,17 +6,9 @@ env:
   AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
   AWS_REGION: ap-south-1
 jobs:
-  slackNotification:
-    name: Slack Notification
-    runs-on: kk-ms
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/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
+  
 
   create-tag:
-    needs: slackNotification
     name: Generate Tag for Image
     runs-on: kk-ms
     steps:
@@ -37,6 +29,8 @@ jobs:
     name: Build Image
     needs: create-tag
     uses: ./.github/workflows/reusebale_build.yml
+    with:
+      tag: production
 
   unit-test:
     name: Unit Test

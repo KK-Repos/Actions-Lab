@@ -92,24 +92,9 @@ jobs:
         run: echo $TAG
       - name: Define function names array
         run: |
-          functions=(
-            "kk-test-fn"
-          )
-      - name: Update Lambda functions
-        run: |
-          for function in "${functions[@]}"; do
-            echo $function
-            aws lambda update-function-code \
-                --function-name "$function" \
-                --image-uri "$AWS_ECR_ACCOUNT_URL/$AWS_ECR_REPO:${TAG}" \
-                --region "$AWS_REGION" > /dev/null
+          chmod ugo+x .github/update-fn.sh
+          bash .github/update-fn.sh AWS_ECR_ACCOUNT_URL=${{env.AWS_ECR_REPO}} AWS_ECR_REPO=${{env.AWS_REGION}} TAG=${{env.TAG}} AWS_REGION=${{env.AWS_REGION}}
 
-            if [[ $? -ne 0 ]]; then
-              echo "Error updating function: $function"
-            else
-              echo "Function updated successfully: $function"
-            fi
-          done
       # - name: Update kk-test-fn lambda
       #   run: |
       #     aws lambda update-function-code \

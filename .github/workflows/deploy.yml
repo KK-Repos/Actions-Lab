@@ -98,6 +98,7 @@ jobs:
       - name: Update Lambda functions
         run: |
           for function in "${functions[@]}"; do
+            echo $function
             aws lambda update-function-code \
                 --function-name "$function" \
                 --image-uri "$AWS_ECR_ACCOUNT_URL/$AWS_ECR_REPO:${TAG}" \

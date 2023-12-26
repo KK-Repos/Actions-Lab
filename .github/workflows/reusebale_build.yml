@@ -1,15 +1,11 @@
 name: Reuseable-Workflow
 on: workflow_call
 
-inputs:
-  tag:
-     required: false
-     default: "dev"
 env:
   PORT: 3000
 jobs:
   build-image:
-    runs-on: ${{ inputs.tag == "production" && 'kk-ms' || ubuntu-latest }}
+    runs-on: ${{ github.ref_name == 'master' && 'kk-ms' || fromJSON('["self-hosted"]') }}
     steps:
       - name: Check env name
         run:  echo ${{inputs.tag}}

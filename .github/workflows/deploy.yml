@@ -92,7 +92,7 @@ jobs:
         run: echo $TAG
       - name: Define function names array
         run: |
-          bash ./.github/scripts/update-fn.sh ${{env.AWS_ECR_REPO}} "kk-ms-rep" ${{env.TAG}} ${{env.AWS_REGION}}
+          bash ./.github/scripts/update-fn.sh ${{env.AWS_ECR_REPO}} "kk-ms-repo" ${{env.TAG}} ${{env.AWS_REGION}}
 
       # - name: Update kk-test-fn lambda
       #   run: |

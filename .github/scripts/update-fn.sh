@@ -12,7 +12,7 @@ FUNCTION_GROUP="$5"
 echo $FUNCTION_GROUP
 
 array_name="${FUNCTION_GROUP}_functions"
-echo $array_name
+echo $array_name[[@]]
 
 
 echo "internal_functions1 $internal_functions"

@@ -2,13 +2,18 @@
 
 source lambda-constants.sh
 
-array_name="${FUNCTION_GROUP}_functions"
 
 AWS_ECR_ACCOUNT_URL="$1"
 AWS_ECR_REPO="$2"
-TAG="$3"
+TAG="$3"array_name
 AWS_REGION="$4"
 FUNCTION_GROUP="$5"
+
+echo $FUNCTION_GROUP
+
+
+array_name="${FUNCTION_GROUP}_functions"
+
 
 echo $array_name
 

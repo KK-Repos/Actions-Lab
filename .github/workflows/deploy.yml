@@ -97,6 +97,9 @@ jobs:
  
 
   main_cluster_deployment:
+    permissions:
+      id-token: write
+      contents: write
     needs: push-to-ecr
     runs-on: ubuntu-latest
     steps:

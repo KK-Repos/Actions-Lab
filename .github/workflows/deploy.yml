@@ -102,11 +102,17 @@ jobs:
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
-      - name : test env for tag
-        run: echo $TAG
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::087229364167:role/test-kk
+          aws-region: "ap-south-1"
+      - name: Login to Amazon ECR
+        id: id-token
+        uses: aws-actions/amazon-ecr-login@v2
       - name:  Get the tag
         uses: ./.github/actions/getTagName
-      - name : test env for tag
+      - name: test
         run: echo $TAG
       - name: Define function names array
         run: |

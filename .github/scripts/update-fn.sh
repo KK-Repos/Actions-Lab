@@ -1,27 +1,19 @@
 #!/bin/bash
 
-# Parse arguments and set environment variables
-while [[ $# -gt 0 ]]; do
-  key="$1"
-  value="$2"
+# Define the array of function names
+functions=("kk-test-fn")  # Add more function names here if needed
 
-  # Check for valid argument format
-  if [[ ! $value ]]; then
-    echo "Invalid argument format: $key should be followed by a value"
-    exit 1
-  fi
-
-  # Set environment variable
-  export "$key=$value"
-
-  shift 2
-done
+# Access arguments passed to the script
+AWS_ECR_ACCOUNT_URL="$1"  # First argument
+AWS_ECR_REPO="$2"        # Second argument
+TAG="$3"                  # Third argument (likely from an environment variable)
+AWS_REGION="$4"          # Fourth argument (likely from an environment variable)
 
 
 echo $AWS_ECR_ACCOUNT_URL
 echo $AWS_ECR_REPO
-echo "region is $AWS_REGION"
-
+echo $TAG
+echo $AWS_REGION
 
 # Define the array of function names
 functions=("kk-test-fn")
@@ -41,3 +33,5 @@ for function in "${functions[@]}"; do
     echo "Function updated successfully: $function"
   fi
 done
+
+

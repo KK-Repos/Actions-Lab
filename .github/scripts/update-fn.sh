@@ -15,8 +15,10 @@ echo $AWS_ECR_REPO
 echo $TAG
 echo $AWS_REGION
 
-# Define the array of function names
-functions=("kk-test-fn")
+functions=("
+kk-test-fn,
+kk-test-beta-fn
+")
 
 # Iterate through the array and update each function
 for function in "${functions[@]}"; do
@@ -28,7 +30,6 @@ for function in "${functions[@]}"; do
   # Check for errors and provide informative messages
   if [[ $? -ne 0 ]]; then
     echo "Error updating function: $function"
-    echo "Error details: $(aws lambda update-function-code --function-name "$function" --image-uri "${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPO}:${TAG}" --region "${AWS_REGION}" 2>&1)"
   else
     echo "Function updated successfully: $function"
   fi

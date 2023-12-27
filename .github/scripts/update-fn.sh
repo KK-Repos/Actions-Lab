@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# source ./.github/scripts/config.sh
-source config.sh
+source ./.github/scripts/config.sh
+# source config.sh
 
 
 AWS_ECR_ACCOUNT_URL="$1"

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Define the array of function names
-functions=("kk-test-fn")  # Add more function names here if needed
 
 # Access arguments passed to the script
 AWS_ECR_ACCOUNT_URL="$1"  # First argument

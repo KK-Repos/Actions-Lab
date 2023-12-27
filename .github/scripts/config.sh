@@ -1,6 +1,7 @@
 
 internal_functions=(
-    "kk-test-fn"
+    "kk-test-fn",
+    "kk-test-beta-fn"
 )
 
 main_functions=(

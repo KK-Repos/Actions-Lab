@@ -86,12 +86,10 @@ jobs:
       - name: Login to Amazon ECR
         id: id-token
         uses: aws-actions/amazon-ecr-login@v2
-      # - name:  Get the tag
-      #   uses: ./.github/actions/getTagName
+      - name:  Get the tag
+        uses: ./.github/actions/getTagName
       - name: test
         run: echo $TAG
-      - name: test
-        run: echo ${{ github.workspace }}
       - name: Define function names array
         run: |
           bash ./.github/scripts/update-fn.sh ${{env.AWS_ECR_REPO}} "kk-ms-rep" ${{env.TAG}} ${{env.AWS_REGION}}

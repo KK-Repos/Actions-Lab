@@ -11,11 +11,12 @@ FUNCTION_GROUP="$5"
 
 echo $FUNCTION_GROUP
 
-
 array_name="${FUNCTION_GROUP}_functions"
-
-
 echo $array_name
+
+
+echo "internal_functions1 $internal_functions"
+
 
 if [[ -v "${array_name}" ]]; then
   for function in "${!array_name[@]}"; do  # Corrected array expansion

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source lambda-constants.sh
+source ./.github/scripts/config.sh
 
 
 AWS_ECR_ACCOUNT_URL="$1"
@@ -16,6 +16,8 @@ echo $array_name
 
 
 echo "internal_functions1 $internal_functions"
+
+echo $TEST4_AUTH_DEFAULT_VAL
 
 
 if [[ -v "${array_name}" ]]; then

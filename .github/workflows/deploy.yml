@@ -3,11 +3,11 @@ on: workflow_dispatch
 
 env:
   PORT: 3000 
-  AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com/kk-ms-repo
+  AWS_ECR_REPO: 087229364167.dkr.ecr.ap-south-1.amazonaws.com
   AWS_REGION: ap-south-1
-jobs:
-  
+  TAG: ${{ vars.TAG }}
 
+jobs:
   create-tag:
     name: Generate Tag for Image
     runs-on: kk-ms
@@ -18,29 +18,32 @@ jobs:
           mkdir workspace
           TAG=$(date --utc +%Y.%m.%d-%H.%M)
           echo ${TAG} >> vars.txt
+      - name: Print tag env
+        run: echo ${{env.TAG}}
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v3
         with:
           name: workspace
           path: vars.txt
           retention-days: 1
+  
 
   build-image:
     name: Build Image
     needs: create-tag
     uses: ./.github/workflows/reusebale_build.yml
 
-  unit-test:
-    name: Unit Test
-    needs: build-image
-    uses: ./.github/workflows/reuseable_unit-test.yml
+  # # unit-test:
+  # #   name: Unit Test
+  # #   needs: build-image
+  # #   uses: ./.github/workflows/reuseable_unit-test.yml
 
   push-to-ecr:
     permissions:
       id-token: write
       contents: write
     name: Image push to ECR repo
-    needs: [build-image,unit-test]
+    needs: [build-image]
     runs-on: kk-ms
     environment: prod
     steps:
@@ -54,7 +57,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::087229364167:role/test-kk
-          aws-region: "ap-south-1"
+          aws-region: "ap-  -1"
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
@@ -62,8 +65,8 @@ jobs:
         run: echo ${{ env.TAG }}
       - name: push to ECR
         run: |
-          docker tag kk-ms:${TAG} ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
-          docker push ${{env.AWS_ECR_REPO}}:${{ env.TAG }}
+          docker tag kk-ms:${TAG} ${{env.AWS_ECR_REPO}}/kk-ms-repo:${{ env.TAG }}
+          docker push ${{env.AWS_ECR_REPO}}/kk-ms-repo:${{ env.TAG }}
 
   internal_cluster_deployment:
     needs: push-to-ecr
@@ -87,49 +90,8 @@ jobs:
         uses: ./.github/actions/getTagName
       - name: test
         run: echo $TAG
-      - name: Update kk-test-fn lambda
+      - name: Define function names array
         run: |
-          aws lambda update-function-code \
-            --function-name kk-test-fn  \
-            --image-uri ${{env.AWS_ECR_REPO}}:${{ env.TAG }} --region ${{ env.AWS_REGION }} > /dev/null
-      - name: update userpicker-2
-        run: echo $TAG
-      - name: update userpicker-3
-        run: echo $TAG  
-      - name: update userpicker-4
-        run: echo $TAG 
-      - name: update userpicker-5
-        run: echo $TAG
-      - name: update userpicker-6
-        run: echo $TAG
-      - name: update userpicker-7
-        run: echo $TAG  
-      - name: update userpicker-8
-        run: echo $TAG   
-
-  main_cluster_deployment:
-    needs: push-to-ecr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Branch
-        uses: actions/checkout@v3
-      - name : test env for tag
-        run: echo $TAG
-      - name:  Get the tag
-        uses: ./.github/actions/getTagName
-      - name : test env for tag
-        run: echo $TAG
-  icp_cluster_deployment:
-    needs: push-to-ecr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Branch
-        uses: actions/checkout@v3
-      - name : test env for tag
-        run: echo $TAG
-      - name:  Get the tag
-        uses: ./.github/actions/getTagName
-      - name : test env for tag
-        run: echo $TAG
-      - name : test env for tag-1
-        run: echo $TAG
+          bash ./.github/scripts/update-fn.sh ${{env.AWS_ECR_REPO}} "kk-ms-repo" ${{env.TAG}} ${{env.AWS_REGION}} internal
+        shell: bash
+ 

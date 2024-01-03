@@ -1,5 +1,5 @@
 name: Deploy-Actions 🔥
-on: push
+on: workflow_dispatch
 
 env:
   PORT: 3000 

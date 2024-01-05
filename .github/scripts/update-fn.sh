@@ -23,9 +23,6 @@ fi
 
 echo "List of fn name ${array_name}"
 
-# for function in "${array_name[@]}"; do 
-#     echo $function
-# done
 
   for function in "${array_name[@]}"; do 
     aws lambda update-function-code \

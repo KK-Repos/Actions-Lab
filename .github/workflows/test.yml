@@ -7,6 +7,14 @@ env:
 jobs:
   test-job:
     runs-on: ubuntu-latest
+    name: print Run ID
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
+  unit-test:
+    runs-on: ubuntu-latest
+    name: unit-test-job
+    steps:
+      - name: run unit test
+        run: echo "Running unit test"
+    

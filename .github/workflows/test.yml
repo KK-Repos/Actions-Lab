@@ -23,12 +23,8 @@ jobs:
           GH_TOKEN: $GH_TOKEN
           BRANCH_NAME: "master"
       - name: Use Custom Action Output
-        run: |
-          job_data = json.loads('${{ steps.custom-action.outputs.my_output }}')
-          for job in job_data:
-              echo "Job Name: ${{ job['name'] }}"
-              echo "HTML URL: ${{ job['html_url'] }}"
-              echo "Status: ${{ job['status'] }}
+        run: echo ${{ steps.custom-action.outputs.my_output }}
+
 
   # unit-test:
   #   runs-on: ubuntu-latest

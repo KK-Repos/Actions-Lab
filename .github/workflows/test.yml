@@ -11,6 +11,13 @@ jobs:
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
+    uses: iamkishorekumar-git/GetWorkflowJobsStatus/master
+    with:
+      ORG=${{ secrets.ORG }}
+      REPO=${{ secrets.REPO }}
+      GH_TOKEN=${{ secrets.GH_TOKEN }}
+      BRANCH_NAME="master"
+
   unit-test:
     runs-on: ubuntu-latest
     name: unit-test-job

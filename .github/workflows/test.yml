@@ -14,12 +14,16 @@ jobs:
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
-      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.05
+      - name: custom actions
+        id: custom-action
+      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.06
         with:
           ORG: $ORG
           REPO: $ORG
           GH_TOKEN: $GH_TOKEN
           BRANCH_NAME: "master"
+      - name: Use Custom Action Output
+        run: echo "Output from Custom Action: ${{ steps.custom-action.outputs.my_output }}"
 
   # unit-test:
   #   runs-on: ubuntu-latest

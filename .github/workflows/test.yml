@@ -4,6 +4,9 @@ on: workflow_dispatch
 
 env:
   RUN_ID:  ${{ github.run_id }}
+  ORG: ${{ secrets.ORG }}
+  REPO: ${{ secrets.REPO }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
   test-job:
     runs-on: ubuntu-latest
@@ -11,17 +14,17 @@ jobs:
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
-      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.01
+      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.02
         with:
-          ORG=${{ secrets.ORG }}
-          REPO=${{ secrets.REPO }}
-          GH_TOKEN=${{ secrets.GH_TOKEN }}
-          BRANCH_NAME="master"
+          ORG: $ORG
+          REPO: $ORG
+          GH_TOKEN: $GH_TOKEN
+          BRANCH_NAME: "master"
 
-  unit-test:
-    runs-on: ubuntu-latest
-    name: unit-test-job
-    steps:
-      - name: run unit test
-        run: echo "Running unit test"
+  # unit-test:
+  #   runs-on: ubuntu-latest
+  #   name: unit-test-job
+  #   steps:
+  #     - name: run unit test
+  #       run: echo "Running unit test"
     

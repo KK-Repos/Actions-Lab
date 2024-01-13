@@ -18,9 +18,9 @@ jobs:
         id: custom-action
         uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.10
         with:
-          ORG: $ORG
-          REPO: $ORG
-          GH_TOKEN: $GH_TOKEN
+          # ORG: $ORG
+          # REPO: $ORG
+          # GH_TOKEN: $GH_TOKEN
           BRANCH_NAME: "master"
       - name: Use Custom Action Output
         run: echo ${{ steps.custom-action.outputs.my_output }}

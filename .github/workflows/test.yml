@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
-      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.03
+      - uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.04
         with:
           ORG: $ORG
           REPO: $ORG

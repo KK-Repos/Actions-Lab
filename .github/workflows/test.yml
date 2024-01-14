@@ -7,7 +7,7 @@ env:
   ORG: ${{ secrets.ORG }}
   REPO: ${{ secrets.REPO }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  JOB_NAME: ("unit-test-job" "cypress-run-job")
+  JOB_NAME: ${{ vars.JOB_NAME }}
 jobs:
   test-job:
     runs-on: ubuntu-latest

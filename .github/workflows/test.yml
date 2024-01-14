@@ -7,8 +7,8 @@ env:
   ORG: ${{ secrets.ORG }}
   REPO: ${{ secrets.REPO }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  JOB_NAME_1: unit-test-job ,cypress-test-job
-  JOB_NAME_2: "unit-test-job"
+  JOB_NAME_1: unit-test-job
+  JOB_NAME_2: cypress-test-job
   
   
 jobs:
@@ -31,10 +31,10 @@ jobs:
         run: echo ${{ steps.custom-action.outputs.my_output }}
 
 
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   name: unit-test-job
-  #   steps:
-  #     - name: run unit test
-  #       run: echo "Running unit test"
+  unit-test:
+    runs-on: ubuntu-latest
+    name: unit-test-job
+    steps:
+      - name: run unit test
+        run: echo "Running unit test"
     

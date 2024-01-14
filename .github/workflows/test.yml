@@ -16,12 +16,12 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.10
+        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.11
         with:
-          # ORG: $ORG
-          # REPO: $ORG
-          # GH_TOKEN: $GH_TOKEN
-          BRANCH_NAME: "master"
+          ORG: $ORG
+          REPO: $ORG
+          RUN_ID: ${{ github.run_id }}
+          JOB_NAME: unit-test-job, cypress-run-job
       - name: Use Custom Action Output
         run: echo ${{ steps.custom-action.outputs.my_output }}
 

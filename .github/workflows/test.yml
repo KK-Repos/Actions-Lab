@@ -30,9 +30,19 @@ jobs:
 
 
   unit-test:
+    needs: test-job
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
       - name: run unit test
         run: exit 1
+        
+  cypress-test:
+    needs: unit-test
+    if: always()
+    runs-on: ubuntu-latest
+    name: cypress-test-job
+    steps:
+      - name: run unit test
+        run: exit 0
     

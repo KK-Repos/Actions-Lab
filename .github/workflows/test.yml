@@ -7,7 +7,6 @@ env:
   ORG: ${{ secrets.ORG }}
   REPO: ${{ secrets.REPO }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  JOB_NAME: ${{ vars.JOB_NAME }}
 jobs:
   test-job:
     runs-on: ubuntu-latest
@@ -17,12 +16,13 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.11
+        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.13
         with:
           ORG: $ORG
           REPO: $ORG
           RUN_ID: ${{ github.run_id }}
-          JOB_NAME: $JOB_NAME
+          JOB_NAME_1: unit-test-job
+          JOB_NAME_2: cypress-test-job
       - name: Use Custom Action Output
         run: echo ${{ steps.custom-action.outputs.my_output }}
 

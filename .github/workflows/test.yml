@@ -25,8 +25,8 @@ jobs:
           ORG: $ORG
           REPO: $ORG
           RUN_ID: ${{ github.run_id }}
-          JOB_NAME_1: ${{ env.JOB_NAME_1 }}
-          JOB_NAME_2: "cypress-test-job"
+          # JOB_NAME_1: ${{ env.JOB_NAME_1 }}
+          # JOB_NAME_2: "cypress-test-job"
       - name: Use Custom Action Output
         run: echo ${{ steps.custom-action.outputs.my_output }}
 

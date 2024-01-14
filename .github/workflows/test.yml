@@ -16,7 +16,7 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.14
+        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v.15
         with:
           ORG: $ORG
           REPO: $ORG

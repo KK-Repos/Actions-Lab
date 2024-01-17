@@ -9,6 +9,8 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   JOB_NAME_1: unit-test-job
   JOB_NAME_2: cypress-test-job
+  CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   
   
 jobs:
@@ -40,10 +42,12 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v0.2
+        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v0.3
         with:
           ORG: $ORG
           REPO: $ORG
           RUN_ID: ${{ github.run_id }}
+          CHANNEL_ID: $CHANNEL_ID
+          SLACK_BOT_TOKEN: $SLACK_BOT_TOKEN
       - name: Use Custom Action Output
         run: echo ${{ steps.custom-action.outputs.my_output }}

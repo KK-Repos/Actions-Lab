@@ -1,4 +1,4 @@
-name: test-Lab
+name: test-checkout
 
 on: workflow_dispatch
 
@@ -10,5 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      - name: print the dir 
+        run: ls
             
         

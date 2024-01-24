@@ -29,6 +29,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: res
-          path: resultTest.js
+          path: result
+      - name: print workdir
+        run: ls
+      - name: check result folder
+        run: |
+          cd result/
+          ls
       - name: print the content
         run: node printResult.js

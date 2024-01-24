@@ -1,0 +1,30 @@
+name: test-report
+
+on: workflow_dispatch
+
+jobs:
+  test-job-1:
+    runs-on: ubuntu-latest
+    name: test-upload Artifact
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: print the dir 
+        run: ls
+      - name: Upload Data Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: res
+          path: resultData.js
+          retention-days: 1
+            
+  test-job-2:
+    runs-on: ubuntu-latest
+    name: test-download-artifact
+    needs: test-job-1
+    steps:
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: res
+          path: resultData.js

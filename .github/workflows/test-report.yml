@@ -41,6 +41,7 @@ jobs:
       - name: Read and Print JSON
         run: |
           data=$(cat result/resultData.json)
-          echo "::group::JSON Data"
+          echo -e "\e[32m"
           echo "$data" | jq -r '.[] | "File: \(.text)"'
-          echo "::endgroup::"
+          echo -e "\e[0m"   # Reset text color
+

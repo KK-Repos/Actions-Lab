@@ -38,3 +38,9 @@ jobs:
           ls
       - name: print the content
         run: node printResult.js
+      - name: Read and Print JSON
+        run: |
+          data=$(cat result/resultData.json)
+          echo "::group::JSON Data"
+          echo "$data" | jq -r '.[] | "File: \(.text)"'
+          echo "::endgroup::"

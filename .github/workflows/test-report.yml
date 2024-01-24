@@ -15,7 +15,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: res
-          path: resultData.js
+          path: resultData.json
           retention-days: 1
             
   test-job-2:

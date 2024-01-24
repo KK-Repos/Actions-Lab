@@ -23,6 +23,8 @@ jobs:
     name: test-download-artifact
     needs: test-job-1
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Download Data Artifact
         uses: actions/download-artifact@v3
         with:

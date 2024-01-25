@@ -2,7 +2,7 @@ name: test-report
 
 on: workflow_dispatch
 env:
-  ENV: ${{ github.ref_name == 'master' && vars.ENV || secrets.ENV }}
+  ENV: ${{ github.ref_name == 'master' && ${{vars.ENV}} || ${{secrets.ENV}} }}
 
 jobs:
   test-job-1:

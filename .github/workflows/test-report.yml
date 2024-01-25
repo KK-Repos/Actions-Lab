@@ -1,6 +1,8 @@
 name: test-report
 
 on: workflow_dispatch
+env:
+  ENV: ${{ github.ref_name == 'master' && vars.ENV || secrets.ENV }}
 
 jobs:
   test-job-1:
@@ -9,6 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: print the name
+        run: echo $ENV
       - name: print the dir 
         run: ls
       - name: Upload Data Artifact

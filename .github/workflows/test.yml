@@ -44,7 +44,7 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: KK-Repos/NotifyJobStatus@v1
+        uses: KK-Repos/NotifyJobStatus@v1.1
         with:
           ORG: $ORG
           REPO: $ORG

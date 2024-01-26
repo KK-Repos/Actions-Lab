@@ -11,7 +11,9 @@ env:
   JOB_NAME_2: cypress-test-job
   CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  
+  CUSTOM_LINK: true
+  NEW_LINK_JOB_NAME: ${{ vars.NEW_LINK_JOB_NAME }}
+  OLD_LINK_JOB_NAME: ${{ vars.OLD_LINK_JOB_NAME }}
   
 jobs:
 

@@ -1,4 +1,4 @@
-name: test-Lab
+name: test-NotifyJobStatus
 
 on: workflow_dispatch
 
@@ -42,7 +42,7 @@ jobs:
         run: echo "PR_NUMBER" $RUN_ID
       - name: custom actions
         id: custom-action
-        uses: iamkishorekumar-git/GetWorkflowJobsStatus@v0.2
+        uses: KK-Repos/NotifyJobStatus@v1
         with:
           ORG: $ORG
           REPO: $ORG

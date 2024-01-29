@@ -4,8 +4,8 @@ on: workflow_dispatch
 
 env:
   RUN_ID:  ${{ github.run_id }}
-  ORG: ${{ secrets.ORG }}
-  REPO: ${{ secrets.REPO }}
+  ORG: KK-Repos
+  REPO: Actions-Lab
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
   JOB_NAME_1: unit-test-job

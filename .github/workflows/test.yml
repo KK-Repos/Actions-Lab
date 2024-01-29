@@ -9,7 +9,7 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
   JOB_NAME_1: unit-test-job
-  JOB_NAME_2: run-cypress-test-1
+  JOB_NAME_2: run-cypress-test
   CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   CUSTOM_LINK: true

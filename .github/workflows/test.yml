@@ -9,7 +9,7 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
   JOB_NAME_1: unit-test-job
-  JOB_NAME_2: cypress-test-job
+  JOB_NAME_2: run-cypress-test-1
   CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   CUSTOM_LINK: true
@@ -27,18 +27,51 @@ jobs:
         run: echo $GITHUB_TOKEN
       - name: run unit test
         run: exit 1
-        
-  cypress-test:
-    needs: unit-test
-    if: always()
+
+  run-cypress-test-1:
+    name: Print "Hi" from run-cypress-test (1)
     runs-on: ubuntu-latest
-    name: cypress-test-job
     steps:
-      - name: run unit test
-        run: exit 0
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (1)"
+
+  run-cypress-test-2:
+    name: Print "Hi" from run-cypress-test (2)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (2)"
+
+  run-cypress-test-3:
+    name: Print "Hi" from run-cypress-test (3)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (3)"
+
+  run-cypress-test-4:
+    name: Print "Hi" from run-cypress-test (4)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (4)"
+
+  run-cypress-test-5:
+    name: Print "Hi" from run-cypress-test (5)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (5)"
+
+  run-cypress-test-6:
+    name: Print "Hi" from run-cypress-test (6)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the message
+        run: echo "Hi from run-cypress-test (6)"
     
   test-job:
-    needs: [unit-test,cypress-test]
+    needs: [run-cypress-test-6]
     if: always()
     runs-on: ubuntu-latest
     name: print Run ID

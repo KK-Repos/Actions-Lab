@@ -1,6 +1,15 @@
 name: test-NotifyJobStatus
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Make a choice
+        options:
+        - foo
+        - bar
+        - baz
 
 env:
   RUN_ID:  ${{ github.run_id }}

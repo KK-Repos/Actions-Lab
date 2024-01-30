@@ -31,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
+      - name: print the ls
+        run: ls
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v2
         with:

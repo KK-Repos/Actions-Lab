@@ -52,8 +52,8 @@ jobs:
         run: echo ${{ github.event.inputs.choice }} 
       - name: print GITHUB_TOKEN
         run: echo $GITHUB_TOKEN
-      - name: run unit test
-        run: exit 1
+      # - name: run unit test
+      #   run: exit 1
       - name: Next job
         if: failure()
         run: |

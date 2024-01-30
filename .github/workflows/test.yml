@@ -46,7 +46,7 @@ jobs:
           # path: slackReport/results/*.json
           path: |
             - /home/runner/work/Actions-Lab/Actions-Lab/slackReport/results/*
-            - resultData.json
+            - /home/runner/work/Actions-Lab/Actions-Lab/slackReport/results/*.json
           retention-days: 1
       - name: prunt env
         run: echo ${{ github.event.inputs.choice }} 

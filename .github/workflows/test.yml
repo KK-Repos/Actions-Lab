@@ -60,6 +60,7 @@ jobs:
           echo Hello
 
   run-cypress-test-1:
+    needs: unit-test
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
     steps:

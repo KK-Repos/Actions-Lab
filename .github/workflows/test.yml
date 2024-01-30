@@ -77,6 +77,8 @@ jobs:
     runs-on: ubuntu-latest
     name: print Run ID
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
       - name: Get the failure Stats

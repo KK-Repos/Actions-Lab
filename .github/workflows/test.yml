@@ -20,13 +20,13 @@ env:
 jobs:
 
   unit-test:
-    continue-on-error: true
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
       - name: print GITHUB_TOKEN
         run: echo $GITHUB_TOKEN
       - name: run unit test
+        continue-on-error: true
         run: exit 1
       - name: Next job
         run: |

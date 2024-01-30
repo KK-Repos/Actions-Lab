@@ -43,7 +43,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: result-artifact
-          # path: slackReport/results/*.json
           path: |
             slackReport/results/*.json
             resultData.json
@@ -65,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Data Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: result-artifact
           path: result
@@ -76,42 +75,42 @@ jobs:
       - name: Print the message
         run: echo "Hi from run-cypress-test (1)"
 
-  run-cypress-test-2:
-    name: run-cypress-test (2)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print the message
-        run: echo "Hi from run-cypress-test (2)"
+  # run-cypress-test-2:
+  #   name: run-cypress-test (2)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print the message
+  #       run: echo "Hi from run-cypress-test (2)"
 
-  run-cypress-test-3:
-    name: run-cypress-test (3)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print the message
-        run: |
-          echo "Hi from run-cypress-test (3)"
-          exit 0
+  # run-cypress-test-3:
+  #   name: run-cypress-test (3)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print the message
+  #       run: |
+  #         echo "Hi from run-cypress-test (3)"
+  #         exit 0
 
-  run-cypress-test-4:
-    name: run-cypress-test (4)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print the message
-        run: echo "Hi from run-cypress-test (4)"
+  # run-cypress-test-4:
+  #   name: run-cypress-test (4)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print the message
+  #       run: echo "Hi from run-cypress-test (4)"
 
-  run-cypress-test-5:
-    name: run-cypress-test (5)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print the message
-        run: echo "Hi from run-cypress-test (5)"
+  # run-cypress-test-5:
+  #   name: run-cypress-test (5)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print the message
+  #       run: echo "Hi from run-cypress-test (5)"
 
-  run-cypress-test-6:
-    name: run-cypress-test (6)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print the message
-        run: echo "Hi from run-cypress-test (6)"
+  # run-cypress-test-6:
+  #   name: run-cypress-test (6)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print the message
+  #       run: echo "Hi from run-cypress-test (6)"
     
   # test-job:
   #   needs: [run-cypress-test-6]

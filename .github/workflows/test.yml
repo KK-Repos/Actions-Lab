@@ -39,7 +39,6 @@ jobs:
         run: |
           ls -R /home/runner/work/Actions-Lab/Actions-Lab
           ls -R /slackReport/results/
-          ls -R /slackReport/results/*.json
         shell: bash
       - name: Upload Data Artifact
         uses: actions/upload-artifact@v2

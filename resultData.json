@@ -1,8 +1,15 @@
-[
-  {
-    "text": "cypress/e2e/cadences/bulkListQueue.cy.js - (3)"
-  },
-  {
-    "text": "cypress/e2e/cadences/testCypress.cy.js - (1)"
-  }
-]
+{
+  "result": [
+    {
+      "testcases": [
+        {
+          "text": "cypress/e2e/reports/sample.cy.js - (3)"
+        },
+        {
+          "text": "cypress/e2e/cadences/test.cy.js - (3)"
+        }
+      ]
+    }
+  ],
+  "failureStats": 6
+}

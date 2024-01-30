@@ -5,11 +5,10 @@ on:
     inputs:
       choice:
         type: choice
-        description: Make a choice
+        description: Select Yes or No
         options:
-        - foo
-        - bar
-        - baz
+        - Yes
+        - No
 
 env:
   RUN_ID:  ${{ github.run_id }}
@@ -32,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
+      - name: prunt env
+        run: echo ${{ github.event.inputs.choice }} 
       - name: print GITHUB_TOKEN
         run: echo $GITHUB_TOKEN
       - name: run unit test

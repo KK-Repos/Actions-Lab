@@ -20,6 +20,7 @@ env:
 jobs:
 
   unit-test:
+    continue-on-error: true
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
@@ -27,6 +28,9 @@ jobs:
         run: echo $GITHUB_TOKEN
       - name: run unit test
         run: exit 1
+      - name: Next job
+        run: |
+          echo Hello
 
   run-cypress-test-1:
     name: run-cypress-test (1)

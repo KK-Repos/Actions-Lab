@@ -45,7 +45,7 @@ jobs:
           name: result-artifact
           # path: slackReport/results/*.json
           path: |
-            - /home/runner/work/Actions-Lab/Actions-Lab/slackReport/results
+            - /home/runner/work/Actions-Lab/Actions-Lab/slackReport/results/*
             - resultData.json
           retention-days: 1
       - name: prunt env

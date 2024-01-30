@@ -26,9 +26,9 @@ jobs:
       - name: print GITHUB_TOKEN
         run: echo $GITHUB_TOKEN
       - name: run unit test
-        continue-on-error: true
         run: exit 1
       - name: Next job
+        if: failure()
         run: |
           echo Hello
 

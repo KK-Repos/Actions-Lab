@@ -79,6 +79,10 @@ jobs:
     steps:
       - name: Print the current run id
         run: echo "PR_NUMBER" $RUN_ID
+      - name: Get the failure Stats
+        run: |
+          FAILURE_STATS=$(jq -r '.failureStats' resultData.json)
+          echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
       - name: custom actions
         id: custom-action
         uses: KK-Repos/NotifyJobStatus@v1

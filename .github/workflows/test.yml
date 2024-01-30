@@ -63,6 +63,15 @@ jobs:
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
     steps:
+      - name: Download Data Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: result-artifact
+          path: result
+      - name: Get the failure Stats
+        run: |
+          FAILURE_STATS=$(jq -r '.failureStats' result/resultData.json)
+          echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
       - name: Print the message
         run: echo "Hi from run-cypress-test (1)"
 

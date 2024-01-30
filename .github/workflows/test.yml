@@ -73,7 +73,7 @@ jobs:
           FAILURE_STATS=$(jq -r '.failureStats' result/resultData.json)
           echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
       - name: Print the message
-        run: echo "Hi from run-cypress-test (1)"
+        run: echo $FAILURE_STATS
 
   # run-cypress-test-2:
   #   name: run-cypress-test (2)

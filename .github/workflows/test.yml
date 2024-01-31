@@ -2,14 +2,11 @@ name: test-NotifyJobStatus
 
 on: 
   workflow_dispatch:
-    # inputs:
     inputs:
-      environment:
-        type: environment
-        description: Select the environment
-      boolean:
-        type: boolean
-        description: True or False
+      debug_mode:
+        description: '...'
+        required: false
+        default: 'false'
       # optionInput:
       #   type: choice
       #   description: 'Do you want to run cypress test ?'

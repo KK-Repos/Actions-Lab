@@ -6,16 +6,10 @@ on:
       optionInput:
         type: choice
         description: 'Do you want to run cypress test ?'
-        default: 'yes'
-        options:
-        - Yes
-        - No
       slackInput:
         type: choice
         description: 'Do you want slack report for cypress run ?'
-        options:
-        - Yes
-        - No
+
 
 env:
   RUN_ID:  ${{ github.run_id }}

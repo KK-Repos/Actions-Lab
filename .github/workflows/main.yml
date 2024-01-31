@@ -5,7 +5,7 @@ on:
     inputs:
       use-emoji:
         type: boolean
-        description: want to run greet 
+        description: Run Cypress test
 
 jobs:
   greet:

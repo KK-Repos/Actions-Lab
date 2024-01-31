@@ -2,13 +2,40 @@ name: test-NotifyJobStatus
 
 on: 
   workflow_dispatch:
+    # inputs:
     inputs:
-      optionInput:
+      environment:
+        type: environment
+        description: Select the environment
+      boolean:
+        type: boolean
+        description: True or False
+      choice:
         type: choice
-        description: 'Do you want to run cypress test ?'
-      slackInput:
-        type: choice
-        description: 'Do you want slack report for cypress run ?'
+        description: Make a choice
+        options:
+        - foo
+        - bar
+        - baz
+      # optionInput:
+      #   type: choice
+      #   description: 'Do you want to run cypress test ?'
+      #   default: 'yes'
+      #   options:
+      #   - Yes
+      #   - No
+      # unitTestInput:
+      #   type: choice
+      #   description: 'Do you want to run unit test ?'
+      #   options:
+      #   - Yes
+      #   - No
+      # slackInput:
+      #   type: choice
+      #   description: 'Do you want slack report for cypress run ?'
+      #   options:
+      #   - Yes
+      #   - No
 
 
 env:

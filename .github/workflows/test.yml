@@ -10,7 +10,7 @@ on:
       boolean:
         type: boolean
         description: True or False
-      choice:
+      slackInput:
         type: choice
         description: Make a choice
         options:

@@ -71,17 +71,18 @@ jobs:
         run: echo ${{ github.event.inputs.choice }} 
       - name: print GITHUB_TOKEN
         run: echo $GITHUB_TOKEN
-      # - name: run unit test
-      #   run: exit 1
-      - name: Next job
-        if: failure()
-        run: |
-          echo Hello
+      - name: run unit test
+        run: exit 1
+      # - name: Next job
+      #   if: failure()
+      #   run: |
+      #     echo Hello
 
   run-cypress-test-1:
     needs: unit-test
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
+    if: "!cancelled()"
     steps:
       - name: Download Data Artifact
         uses: actions/download-artifact@v4

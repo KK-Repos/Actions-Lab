@@ -3,18 +3,15 @@ name: Mixed inputs
 on:
   workflow_dispatch:
     inputs:
-      dst:
-        description: Select checkbox
       cypressInput:
         type: boolean
-        description: 'Do you want to run cypress test ?'
-        required: true
+        description: 'Run Cypress Test'
       unitTestInput:
         type: boolean
-        description: 'Do you want to run unit test'
+        description: 'Run Unit Test'
       slackInput:
         type: boolean
-        description: 'Do you want slack report for cypress test'
+        description: 'Slack report for cypress test'
 
 jobs:
   greet:

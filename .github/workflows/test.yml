@@ -49,8 +49,6 @@ jobs:
     runs-on: ubuntu-latest
     name: unit-test-job
     steps:
-      - name: print input
-        run:  echo "boolean is ${{ github.event.inputs.boolean }}
       - name: Checkout Branch
         uses: actions/checkout@v3
       - name: print the ls

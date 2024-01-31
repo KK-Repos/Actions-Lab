@@ -10,7 +10,9 @@ on:
 jobs:
   greet:
     runs-on: ubuntu-latest
-    if: github.event.inputs.use-emoji == true
+    # if: github.event.inputs.use-emoji == true
     steps:
+    - name: print the input
+      run: echo ${{ github.event.inputs.use-emoji }}
     - name: Send greeting
       run: echo "true print"

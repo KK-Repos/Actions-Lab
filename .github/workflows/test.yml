@@ -3,10 +3,18 @@ name: test-NotifyJobStatus
 on: 
   workflow_dispatch:
     inputs:
-      choice:
+      optionInput:
         type: choice
-        description: Select Yes or No
+        description: 'Do you want to run cypress test ?'
+        required: true
+        default: 'yes'
         options:
+        - Yes
+        - No
+      slackInput:
+        type: choice
+        description: 'Do you want slack report for cypress run ?'
+        default: 'no'
         - Yes
         - No
 

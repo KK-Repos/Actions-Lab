@@ -3,6 +3,8 @@ name: Mixed inputs
 on:
   workflow_dispatch:
     inputs:
+      message:
+        description: 'Select the checkbox'
       cypressInput:
         type: boolean
         description: 'Run Cypress Test'

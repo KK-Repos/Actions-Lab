@@ -29,7 +29,7 @@ jobs:
     needs: greet
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
-    if: "!cancelled() && github.ref_name == 'master' && github.event.inputs.cypressInput == true"
+    if: "!cancelled() && github.ref_name == 'master'"
     steps:
       - name: Print the message
         run: echo hi

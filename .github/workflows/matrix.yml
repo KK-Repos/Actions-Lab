@@ -3,12 +3,13 @@ name: Matrix Jobs Example
 on: [push]
 
 jobs:
-  automation-test0:
+  automation-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
         python-version: [3.8, 3.9]
+    name: automation-test
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}

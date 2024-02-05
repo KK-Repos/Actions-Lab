@@ -2,19 +2,40 @@ name: Matrix Jobs Example
 
 on: [push]
 
+env:
+  PARALLELISM: 5
 jobs:
-  automation-test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        python-version: [3.8, 3.9]
-    name: automation-test
+  runner-indexes:
+    runs-on: ubuntu-latest
+    name: Parallelism
+    outputs:
+      json: ${{ steps.generate-index-list.outputs.json }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: print the name
-        run: echo hi
+      - id: generate-index-list
+        run: |
+          MAX_INDEX=$((${{ env.PARALLELISM }}-1))
+          INDEX_LIST=$(seq 0 ${MAX_INDEX})
+          INDEX_JSON=$(jq --null-input --compact-output '. |= [inputs]' <<< ${INDEX_LIST})
+          echo "json=${INDEX_JSON}" >> "$GITHUB_OUTPUT"
+  automation-test:
+    needs: [runner-indexes]
+    runs-on: ubuntu-latest
+    name: 'automation-test'
+    strategy:
+      fail-fast: false
+      matrix:
+        runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+      # - uses: chaosaffe/split-tests@v1-alpha.1
+      #   id: split-tests
+      #   name: Split tests
+      #   with:
+      #     glob: cypress/e2e/**/*.cy.js
+      #     split-total: ${{ env.PARALLELISM }}
+      #     split-index: ${{ matrix.runner-index }}
+      #     junit-path: junit/*.xml
+      # - run: |
+      #     echo "TEST=${{ steps.split-tests.outputs.test-suite }}" >> $GITHUB_ENV
+  

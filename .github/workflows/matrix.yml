@@ -21,13 +21,15 @@ jobs:
     needs: [runner-indexes]
     runs-on: ubuntu-latest
     name: 'automation-test'
-    strategy:
-      fail-fast: false
-      matrix:
-        runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
+      - name: print the output
+        run: echo fromjson(needs.runner-indexes.outputs.json
       # - uses: chaosaffe/split-tests@v1-alpha.1
       #   id: split-tests
       #   name: Split tests

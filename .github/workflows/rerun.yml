@@ -9,6 +9,6 @@ jobs:
       - name: Print event name
         run: |
           echo "event name is:" ${{ github.event_name }} 
-          echo "event type is:" ${{ github.event }} 
+          echo "event type is:" ${{ github.event.type }} 
       - name: Fail this step
         run: exit 1

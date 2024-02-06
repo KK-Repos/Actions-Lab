@@ -17,21 +17,21 @@ jobs:
       run: echo test
   test:
     needs: [build]
-    runs-on: ${{ needs.build.outputs.runner }}
+    runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.build.outputs.runner }}
   test1:
     needs: [test]
-    runs-on: ${{ needs.build.outputs.runner }}
+    runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.build.outputs.runner }}
   test2:
     needs: [test1]
-    runs-on: ${{ needs.build.outputs.runner }}
+    runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.build.outputs.runner }}
   test3:
     needs: [test2]
-    runs-on: ${{ needs.build.outputs.runner }}
+    runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.build.outputs.runner }}

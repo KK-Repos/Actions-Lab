@@ -15,9 +15,23 @@ jobs:
     steps:
     - id: runner
       run: echo test
-
   test:
     needs: [build]
     runs-on: ${{ needs.build.outputs.runner }}
     steps:
-      - run: echo I Ran
+      - run: echo ${{ needs.build.outputs.runner }}
+  test1:
+    needs: [test]
+    runs-on: ${{ needs.build.outputs.runner }}
+    steps:
+      - run: echo ${{ needs.build.outputs.runner }}
+  test2:
+    needs: [test1]
+    runs-on: ${{ needs.build.outputs.runner }}
+    steps:
+      - run: echo ${{ needs.build.outputs.runner }}
+  test3:
+    needs: [test2]
+    runs-on: ${{ needs.build.outputs.runner }}
+    steps:
+      - run: echo ${{ needs.build.outputs.runner }}

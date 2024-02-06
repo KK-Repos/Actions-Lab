@@ -17,7 +17,7 @@ jobs:
       run: echo test
   test:
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.LABEL_NAME }}
     steps:
       - run: echo ${{ needs.build.outputs.runner }}
   test1:

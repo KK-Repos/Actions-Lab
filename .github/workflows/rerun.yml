@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print event name
-      - run: |
+        run: |
           echo "event name is:" ${{ github.event_name }} 
           echo "event type is:" ${{ github.event.action }} 
       - name: Fail this step

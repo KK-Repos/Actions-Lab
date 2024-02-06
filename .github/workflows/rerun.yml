@@ -1,0 +1,12 @@
+name: Rerun-Test
+
+on: workflow_dispatch
+
+jobs:
+  job-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print event name
+        run: echo "Event name: ${{ github.event_name }}"
+      - name: Fail this step
+        uses: exit 1

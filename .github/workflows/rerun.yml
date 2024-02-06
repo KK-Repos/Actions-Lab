@@ -4,13 +4,14 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+env:
+  LABEL_NAME: Runner-${{ github.run_id }}
 jobs:
 
   build:
     runs-on: ubuntu-latest
     outputs:
-      runner: ${{ github.run_id }}
+      runner: ${{ env.LABEL_NAME }}
     steps:
     - id: runner
       run: echo test

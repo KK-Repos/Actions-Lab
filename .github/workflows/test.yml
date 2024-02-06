@@ -58,7 +58,7 @@ jobs:
           ls -R /home/runner/work/Actions-Lab/Actions-Lab
         shell: bash
       - name: Upload Data Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: result-artifact
           path: |
@@ -83,7 +83,7 @@ jobs:
     if: "!cancelled() && github.ref_name == 'master'"
     steps:
       - name: Download Data Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: result-artifact
           path: result

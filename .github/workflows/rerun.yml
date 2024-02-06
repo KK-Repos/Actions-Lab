@@ -5,7 +5,7 @@ env:
   LABEL_NAME: Runner-${{ github.run_id }}
 jobs:
   job-name:
-    runs-on: ubuntu-latest
+    runs-on: $LABEL_NAME
     steps:
       - name: Print event name
         run: |

@@ -1,16 +1,22 @@
-name: Rerun-Test
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
-on: workflow_dispatch
-env:
-  LABEL_NAME: Runner-${{ github.run_id }}
 jobs:
-  job-name:
-    runs-on: $LABEL_NAME
+
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ github.run_id }}
     steps:
-      - name: Print event name
-        run: |
-          echo $LABEL_NAME
-          echo "event name is:" ${{ github.event_name }} 
-          echo "event type is:" ${{ github.event.type }} 
-      - name: Fail this step
-        run: exit 1
+    - id: runner
+      run: echo test
+
+  test:
+    needs: [build]
+    runs-on: ${{ needs.build.outputs.runner }}
+    steps:
+      - run: echo I Ran

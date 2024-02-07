@@ -26,18 +26,8 @@ jobs:
       matrix:
         runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
     steps:
-      - name: Print the jobName
-        run: echo ${{ github.job }} # Will only return the job_id: "my-job"
-      - name: TEST
-        run: |
-          JOB_NAME="OS ${{ matrix.os }}"
-          echo $JOB_NAME
-          echo "JOB_NAME=$JOB_NAME" >> $GITHUB_ENV=
-      - name: Print JOB_NAME
-        run: |
-          echo "JOB NAME:" ${{ env.JOB_NAME }}
-      - name: Checkout Branch
-        uses: actions/checkout@v3
+      - name: print the JOB Name
+        run: echo ${{ join(matrix.*, ' - ') }} - ${{ github.event_name }}
       - name: print the output
         run: echo ${{ needs.runner-indexes.outputs.json }}
 

@@ -23,6 +23,8 @@ jobs:
       run: echo ${{ github.event.inputs.use-emoji }}
     - name: Send greeting
       run: echo "true print"
+    - name: print the exit
+      run: exit 1
 
   run-cypress-test-1:
     needs: greet

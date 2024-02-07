@@ -21,23 +21,16 @@ jobs:
     needs: [runner-indexes]
     runs-on: ubuntu-latest
     name: 'automation-test'
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
     steps:
+      - name: Print the jobName
+        run: echo "How about ${{ github.jobs[github.job].name }}"
       - name: Checkout Branch
         uses: actions/checkout@v3
       - name: print the output
         run: echo ${{ needs.runner-indexes.outputs.json }}
-      # - uses: chaosaffe/split-tests@v1-alpha.1
-      #   id: split-tests
-      #   name: Split tests
-      #   with:
-      #     glob: cypress/e2e/**/*.cy.js
-      #     split-total: ${{ env.PARALLELISM }}
-      #     split-index: ${{ matrix.runner-index }}
-      #     junit-path: junit/*.xml
-      # - run: |
-      #     echo "TEST=${{ steps.split-tests.outputs.test-suite }}" >> $GITHUB_ENV
+
   

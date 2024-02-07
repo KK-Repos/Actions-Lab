@@ -30,7 +30,7 @@ jobs:
     needs: greet
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
-    if: "!cancelled() &&  github.event.inputs.cypressInput == 'true'"
+    if: "!cancelled() &&  github.event.inputs.cypressInput == 'true' || github.event.inputs.slackInput == 'true'"
     steps:
       - name: Print the message
         run: echo hi

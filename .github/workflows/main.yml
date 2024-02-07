@@ -34,4 +34,11 @@ jobs:
     steps:
       - name: Print the message
         run: echo hi
-
+  slack-message:
+    needs: greet
+    name: Slack-Report
+    runs-on: ubuntu-latest
+    if: "!cancelled() &&  github.event.inputs.slackInput == 'true'"
+    steps:
+      - name: Print the message
+        run: echo hi

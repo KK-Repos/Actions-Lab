@@ -1,15 +1,13 @@
 {
   "result": [
     {
+      "runnerName": "runner-1",
       "testcases": [
         {
-          "text": "cypress/e2e/reports/sample.cy.js - (3)"
-        },
-        {
-          "text": "cypress/e2e/cadences/test.cy.js - (3)"
+          "text": "cypress/e2e/accounts/accountBulkUpdateStatus.cy.js - (1)"
         }
       ]
     }
   ],
-  "failureStats": 6
+  "failureStats": 1
 }

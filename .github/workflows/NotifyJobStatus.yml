@@ -98,8 +98,8 @@ jobs:
       - name: Upload Data Artifact 
         uses: actions/upload-artifact@v3
         with:
-          name: $ARTIFACT_NAME
-          path: $ARTIFACT_FILE_NAME
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_FILE_NAME }}
           retention-days: 1
       # - name: custom actions
       #   id: custom-action

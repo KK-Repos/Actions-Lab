@@ -42,6 +42,7 @@ env:
   OLD_LINK_JOB_NAME: ${{ vars.OLD_LINK_JOB_NAME }}
   ENABLE_FAIL_CASE: true 
   REPO_NAME: KK-Repos
+  FILE_NAME: resultData.json
   
 jobs:
 
@@ -51,48 +52,17 @@ jobs:
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
-      - name: print the ls
-        run: ls
-      - name: Debugging
-        run: |
-          ls -R /home/runner/work/Actions-Lab/Actions-Lab
-        shell: bash
-      - name: Upload Data Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: result-artifact
-          path: |
-            slackReport/results/*.json
-            resultData.json
-          retention-days: 1
-      - name: prunt env
-        run: echo ${{ github.event.inputs.choice }} 
-      - name: print GITHUB_TOKEN
-        run: echo $GITHUB_TOKEN
       - name: run unit test
         run: exit 1
-      # - name: Next job
-      #   if: failure()
-      #   run: |
-      #     echo Hello
 
-  run-cypress-test-1:
+  run-cypress-test:
     needs: unit-test
     name: run-cypress-test (1)
     runs-on: ubuntu-latest
     if: "!cancelled() && github.ref_name == 'master'"
     steps:
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: result-artifact
-          path: result
       - name: Get the failure Stats
-        run: |
-          FAILURE_STATS=$(jq -r '.failureStats' result/resultData.json)
-          echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
-      - name: Print the message
-        run: echo $FAILURE_STATS
+        run: exit 1
 
   # run-cypress-test-2:
   #   name: run-cypress-test (2)
@@ -131,28 +101,34 @@ jobs:
   #     - name: Print the message
   #       run: echo "Hi from run-cypress-test (6)"
     
-  # test-job:
-  #   needs: [run-cypress-test-6]
-  #   if: always()
-  #   runs-on: ubuntu-latest
-  #   name: print Run ID
-  #   steps:
-  #     - name: Checkout Branch
-  #       uses: actions/checkout@v3
-  #     - name: Print the current run id
-  #       run: echo "PR_NUMBER" $RUN_ID
-  #     - name: Get the failure Stats
-  #       run: |
-  #         FAILURE_STATS=$(jq -r '.failureStats' resultData.json)
-  #         echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
-  #     - name: custom actions
-  #       id: custom-action
-  #       uses: KK-Repos/NotifyJobStatus@v1
-  #       with:
-  #         ORG: $ORG
-  #         REPO: $ORG
-  #         RUN_ID: ${{ github.run_id }}
-  #         CHANNEL_ID: $CHANNEL_ID
-  #         SLACK_BOT_TOKEN: $SLACK_BOT_TOKEN
-  #     - name: Use Custom Action Output
-  #       run: echo ${{ steps.custom-action.outputs.my_output }}
+  test-job:
+    needs: [run-cypress-test]
+    if: always()
+    runs-on: ubuntu-latest
+    name: print Run ID
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+      - name: Print the current run id
+        run: echo "PR_NUMBER" $RUN_ID
+      - name: Get the failure Stats
+        run: |
+          FAILURE_STATS=$(jq -r '.failureStats' resultData.json)
+          echo "FAILURE_STATS=$FAILURE_STATS" >> $GITHUB_ENV
+      - name: Upload Data Artifact 
+        uses: actions/upload-artifact@v3
+        with:
+          name: result-artifact
+          path: resultData.json
+          retention-days: 1
+      - name: custom actions
+        id: custom-action
+        uses: KK-Repos/NotifyJobStatus@master
+        with:
+          ORG: $ORG
+          REPO: $ORG
+          RUN_ID: ${{ github.run_id }}
+          CHANNEL_ID: $CHANNEL_ID
+          SLACK_BOT_TOKEN: $SLACK_BOT_TOKEN
+      - name: Use Custom Action Output
+        run: echo ${{ steps.custom-action.outputs.my_output }}

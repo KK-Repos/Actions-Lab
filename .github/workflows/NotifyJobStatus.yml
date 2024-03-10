@@ -42,6 +42,7 @@ env:
   OLD_LINK_JOB_NAME: ${{ vars.OLD_LINK_JOB_NAME }}
   ENABLE_FAIL_CASE: true 
   FILE_NAME: resultData.json
+  pat_token:  ${{ secrets.GITHUB_TOKEN }}
   
 jobs:
 

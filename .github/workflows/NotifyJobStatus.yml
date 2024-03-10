@@ -35,14 +35,12 @@ env:
   GH_ACTION_TOKEN : ${{ secrets.GITHUB_TOKEN }}
   JOB_NAME_1: run-cypress-test
   JOB_NAME_2: unit-test-job
-  CHANNEL_ID: 'C06FX87FTSR'
   CUSTOM_LINK: true
   NEW_LINK_JOB_NAME: ${{ vars.NEW_LINK_JOB_NAME }}
   OLD_LINK_JOB_NAME: ${{ vars.OLD_LINK_JOB_NAME }}
   ENABLE_FAIL_CASE: true 
   FILE_NAME: resultData.json
   artifactName: report-artifact
-  SLACK_BOT_TOKEN: 'xoxb-2911236440-4824888877571-X10QgZyWGCUrFJefsJQe9J3N'
 
   
 jobs:

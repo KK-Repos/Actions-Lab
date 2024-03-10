@@ -43,6 +43,7 @@ env:
   ENABLE_FAIL_CASE: true 
   FILE_NAME: resultData.json
   pat_token:  ${{ secrets.GITHUB_TOKEN }}
+  artifactName: report-artifact
   
 jobs:
 
@@ -118,7 +119,7 @@ jobs:
       - name: Upload Data Artifact 
         uses: actions/upload-artifact@v3
         with:
-          name: result-artifact
+          name: report-artifact
           path: resultData.json
           retention-days: 1
       - name: custom actions

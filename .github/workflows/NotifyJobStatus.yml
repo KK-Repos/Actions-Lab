@@ -7,25 +7,6 @@ on:
         description: '...'
         required: false
         default: 'false'
-      # optionInput:
-      #   type: choice
-      #   description: 'Do you want to run cypress test ?'
-      #   default: 'yes'
-      #   options:
-      #   - Yes
-      #   - No
-      # unitTestInput:
-      #   type: choice
-      #   description: 'Do you want to run unit test ?'
-      #   options:
-      #   - Yes
-      #   - No
-      # slackInput:
-      #   type: choice
-      #   description: 'Do you want slack report for cypress run ?'
-      #   options:
-      #   - Yes
-      #   - No
 
 
 env:
@@ -39,8 +20,8 @@ env:
   NEW_LINK_JOB_NAME: ${{ vars.NEW_LINK_JOB_NAME }}
   OLD_LINK_JOB_NAME: ${{ vars.OLD_LINK_JOB_NAME }}
   ENABLE_FAIL_CASE: true 
-  FILE_NAME: resultData.json
-  artifactName: report-artifact
+  ARTIFACT_FILE_NAME: resultData.json
+  ARTIFACT_NAME: report-artifact
 
   
 jobs:
@@ -117,8 +98,8 @@ jobs:
       - name: Upload Data Artifact 
         uses: actions/upload-artifact@v3
         with:
-          name: report-artifact
-          path: resultData.json
+          name: $ARTIFACT_NAME
+          path: $ARTIFACT_FILE_NAME
           retention-days: 1
       # - name: custom actions
       #   id: custom-action

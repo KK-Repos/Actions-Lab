@@ -104,7 +104,7 @@ jobs:
     needs: [run-cypress-test]
     if: always()
     runs-on: ubuntu-latest
-    name: print Run ID
+    name: Send Slack report
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
@@ -120,14 +120,14 @@ jobs:
           name: report-artifact
           path: resultData.json
           retention-days: 1
-      - name: custom actions
-        id: custom-action
-        uses: KK-Repos/NotifyJobStatus@master
-        with:
-          ORG: $ORG
-          REPO: $ORG
-          RUN_ID: ${{ github.run_id }}
-          CHANNEL_ID: $CHANNEL_ID
-          SLACK_BOT_TOKEN: $SLACK_BOT_TOKEN
-      - name: Use Custom Action Output
-        run: echo ${{ steps.custom-action.outputs.my_output }}
+      # - name: custom actions
+      #   id: custom-action
+      #   uses: KK-Repos/NotifyJobStatus@master
+      #   with:
+      #     ORG: $ORG
+      #     REPO: $ORG
+      #     RUN_ID: ${{ github.run_id }}
+      #     CHANNEL_ID: $CHANNEL_ID
+      #     SLACK_BOT_TOKEN: $SLACK_BOT_TOKEN
+      # - name: Use Custom Action Output
+      #   run: echo ${{ steps.custom-action.outputs.my_output }}

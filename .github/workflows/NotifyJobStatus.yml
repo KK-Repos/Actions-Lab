@@ -32,7 +32,7 @@ env:
   RUN_ID:  ${{ github.run_id }}
   ORG: KK-Repos
   REPO: Actions-Lab
-  GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+  GH_ACTION_TOKEN : ${{ secrets.GITHUB_TOKEN }}
   JOB_NAME_1: run-cypress-test
   JOB_NAME_2: unit-test-job
   CHANNEL_ID: ${{ secrets.CHANNEL_ID }}

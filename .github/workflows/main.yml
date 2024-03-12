@@ -4,41 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       message:
-        description: 'Select the checkbox'
-      cypressInput:
-        type: boolean
-        description: 'Run Cypress Test'
-      unitTestInput:
-        type: boolean
-        description: 'Run Unit Test'
-      slackInput:
-        type: boolean
-        description: 'Slack report for cypress test'
+        description: 'Enter the function name'
 
 jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
     - name: print the input
-      run: echo ${{ github.event.inputs.use-emoji }}
-    - name: Send greeting
-      run: echo "true print"
-    - name: print the exit
-      run: exit 1
+      run: echo ${{ github.event.inputs.message }}
 
-  run-cypress-test-1:
-    needs: greet
-    name: run-cypress-test (1)
-    runs-on: ubuntu-latest
-    if: "!cancelled() &&  github.event.inputs.cypressInput == 'true' || github.event.inputs.slackInput == 'true'"
-    steps:
-      - name: Print the message
-        run: echo hi
-  slack-message:
-    needs: greet
-    name: Slack-Report
-    runs-on: ubuntu-latest
-    if: "!cancelled() &&  github.event.inputs.slackInput == 'true'"
-    steps:
-      - name: Print the message
-        run: echo hi

@@ -3,13 +3,19 @@ name: Mixed inputs
 on:
   workflow_dispatch:
     inputs:
-      message:
-        description: 'Enter the function name'
-
+      userpickerName:
+        description: 'Enter the userpicker name'
+      mailSenderName:
+        description: 'Enter the mailsender name'
+      baseUrl:
+        description: 'Enter the server BaseURL'
 jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-    - name: print the input
-      run: echo ${{ github.event.inputs.message }}
-
+    - name: print the Userpicker
+      run: echo ${{ github.event.inputs.userpickerName }}
+    - name: print the Mailsender
+      run: echo ${{ github.event.inputs.mailSenderName }}
+    - name: print the BaseURL
+      run: echo ${{ github.event.inputs.baseUrl }}

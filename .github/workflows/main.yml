@@ -1,7 +1,7 @@
 name: Mixed inputs
 
 env:
-  BRANCH_NAME: ${{ github }}
+  BRANCH_NAME: ${{ toJson(github) }}
   
 on:
   workflow_dispatch:

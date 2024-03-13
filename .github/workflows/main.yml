@@ -1,7 +1,7 @@
 name: Mixed inputs
 
 env:
-  BRANCH_NAME: ${{ github.ref_name}}
+  BRANCH_NAME: ${{ github }}
   
 on:
   workflow_dispatch:

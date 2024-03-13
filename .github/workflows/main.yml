@@ -24,11 +24,13 @@ jobs:
       run: echo $BRANCH_NAME
   greet1:
     runs-on: ubuntu-latest
+    needs: greet
     steps:
     - name:  print the env
       run: echo $BRANCH_NAME
   greet2:
     runs-on: ubuntu-latest
+    needs: greet1
     steps:
     - name:  print the env
       run: echo $BRANCH_NAME

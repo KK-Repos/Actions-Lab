@@ -1,5 +1,8 @@
 name: Mixed inputs
 
+env:
+  BRANCH_NAME: ${{ github.ref_name-github.run_id  }}
+  
 on:
   workflow_dispatch:
     inputs:
@@ -19,3 +22,5 @@ jobs:
       run: echo ${{ github.event.inputs.mailSenderName }}
     - name: print the BaseURL
       run: echo ${{ github.event.inputs.baseUrl }}
+    - name: print branchname
+      run: echo $BRANCH_NAME

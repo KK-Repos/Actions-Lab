@@ -2,7 +2,6 @@ name: Mixed inputs
 
 env:
   PUSHED_TIME: ${{ github.pushed_at }}
-  BRANCH_NAME: ${{ github.ref_name - github.pushed_at }}
   
 on:
   workflow_dispatch:
@@ -24,4 +23,6 @@ jobs:
     - name: print the BaseURL
       run: echo ${{ github.event.inputs.baseUrl }}
     - name: print branchname
+      run: echo "BRANCH_NAME=${{ github.ref_name }}-${{ github.pushed_at }}" >> $GITHUB_ENV
+    - name:  print the env
       run: echo $BRANCH_NAME

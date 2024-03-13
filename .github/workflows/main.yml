@@ -19,6 +19,6 @@ jobs:
     - name: print the Userpicker
       run: echo $BRANCH
     - name: print branchname
-      run: echo "BRANCH_NAME=${{ github.ref_name }}-${{ github.event.event.pushed_at }}" >> $GITHUB_ENV
+      run: echo "BRANCH_NAME=${{ github.ref_name }}-${{ github.event.repository.pushed_at }}" >> $GITHUB_ENV
     - name:  print the env
       run: echo $BRANCH_NAME

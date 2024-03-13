@@ -1,7 +1,8 @@
 name: Mixed inputs
 
 env:
-  BRANCH_NAME: ${{ toJson(github) }}
+  PUSHED_TIME: ${{ github.pushed_at }}
+  BRANCH_NAME: ${{ github.ref_name - github.pushed_at }}
   
 on:
   workflow_dispatch:

@@ -19,30 +19,26 @@ jobs:
         shell: bash 
       - name: Use the branch name in another job
         run: echo ${{ steps.branch_name.outputs.branch_name }}
-  # runner-indexes:
-  #   runs-on: ubuntu-latest
-  #   name: Parallelism
-  #   outputs:
-  #     json: ${{ steps.generate-index-list.outputs.json }}
-  #   steps:
-  #     - id: generate-index-list
-  #       run: |
-  #         MAX_INDEX=$((${{ env.PARALLELISM }}-1))
-  #         INDEX_LIST=$(seq 0 ${MAX_INDEX})
-  #         INDEX_JSON=$(jq --null-input --compact-output '. |= [inputs]' <<< ${INDEX_LIST})
-  #         echo "json=${INDEX_JSON}" >> "$GITHUB_OUTPUT"
-  # automation-test:
-  #   needs: [runner-indexes]
-  #   runs-on: ubuntu-latest
-  #   name: 'automation-test'
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
-  #   steps:
-  #     - name: print the JOB Name
-  #       run: echo "Container-${{ join(matrix.*, ' - ') }}"
-  #     - name: print the output
-  #       run: echo ${{ needs.runner-indexes.outputs.json }}
+  job2:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use branch name in job2
+        run: |
+          echo "Branch name in job2: ${{ needs.build.outputs.branch_name }}"
 
-  
+  job3:
+    needs: job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use branch name in job3
+        run: |
+          echo "Branch name in job3: ${{ needs.build.outputs.branch_name }}"
+
+  job4:
+    needs: job3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use branch name in job4
+        run: |
+          echo "Branch name in job4: ${{ needs.build.outputs.branch_name }}"

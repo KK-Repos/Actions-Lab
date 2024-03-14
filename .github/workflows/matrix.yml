@@ -4,31 +4,47 @@ on: [push]
 
 env:
   PARALLELISM: 5
+
 jobs:
-  runner-indexes:
+  build:
     runs-on: ubuntu-latest
-    name: Parallelism
-    outputs:
-      json: ${{ steps.generate-index-list.outputs.json }}
     steps:
-      - id: generate-index-list
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+
+      - name: Get branch name
+        id: branch_name
         run: |
-          MAX_INDEX=$((${{ env.PARALLELISM }}-1))
-          INDEX_LIST=$(seq 0 ${MAX_INDEX})
-          INDEX_JSON=$(jq --null-input --compact-output '. |= [inputs]' <<< ${INDEX_LIST})
-          echo "json=${INDEX_JSON}" >> "$GITHUB_OUTPUT"
-  automation-test:
-    needs: [runner-indexes]
-    runs-on: ubuntu-latest
-    name: 'automation-test'
-    strategy:
-      fail-fast: false
-      matrix:
-        runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
-    steps:
-      - name: print the JOB Name
-        run: echo "Container-${{ join(matrix.*, ' - ') }}"
-      - name: print the output
-        run: echo ${{ needs.runner-indexes.outputs.json }}
+          bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS
+        shell: bash 
+      - name: Use the branch name in another job
+        uses: actions/another-job
+        with:
+          branch: ${{ steps.branch_name.outputs.branch_name }}
+  # runner-indexes:
+  #   runs-on: ubuntu-latest
+  #   name: Parallelism
+  #   outputs:
+  #     json: ${{ steps.generate-index-list.outputs.json }}
+  #   steps:
+  #     - id: generate-index-list
+  #       run: |
+  #         MAX_INDEX=$((${{ env.PARALLELISM }}-1))
+  #         INDEX_LIST=$(seq 0 ${MAX_INDEX})
+  #         INDEX_JSON=$(jq --null-input --compact-output '. |= [inputs]' <<< ${INDEX_LIST})
+  #         echo "json=${INDEX_JSON}" >> "$GITHUB_OUTPUT"
+  # automation-test:
+  #   needs: [runner-indexes]
+  #   runs-on: ubuntu-latest
+  #   name: 'automation-test'
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       runner-index: ${{ fromjson(needs.runner-indexes.outputs.json) }}
+  #   steps:
+  #     - name: print the JOB Name
+  #       run: echo "Container-${{ join(matrix.*, ' - ') }}"
+  #     - name: print the output
+  #       run: echo ${{ needs.runner-indexes.outputs.json }}
 
   

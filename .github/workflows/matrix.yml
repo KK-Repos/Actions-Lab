@@ -6,23 +6,37 @@ env:
   PARALLELISM: 5
 
 jobs:
-  job1:
+  build:
     runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      output1: ${{ steps.step1.outputs.BRANCH_NAME }}
     steps:
-      - id: step1
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+
+      - name: Get branch name
+        id: branch_name
         run: |
           bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS
-          BRANCH_NAME=$(bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS) 
-          echo $BRANCH_NAME
-          echo "BRANCH_NAME=BRANCH_NAME" >> "$GITHUB_OUTPUT"
-        shell: bash
+        shell: bash 
+      - name: Use the branch name in another job
+        run: echo ${{ steps.branch_name.outputs.branch_name }}
   job2:
+    needs: build
     runs-on: ubuntu-latest
-    needs: job1
     steps:
-      - env:
-          OUTPUT1: ${{needs.job1.outputs.output1}}
-        run: echo "$OUTPUT1 $OUTPUT2"
+      - name: Use branch name in job2
+        run: |
+          echo "Branch name in job2: ${{ needs.build.outputs.branch_name }}"
+  job3:
+    needs: job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use branch name in job3
+        run: |
+          echo "Branch name in job3: ${{ needs.build.outputs.branch_name }}"
+  job4:
+    needs: job3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use branch name in job4
+        run: |
+          echo "Branch name in job4: ${{ needs.build.outputs.branch_name }}"

@@ -8,6 +8,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.branch_name.outputs.BRANCH_NAME }}
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
@@ -26,18 +28,18 @@ jobs:
     steps:
       - name: Use branch name in job2
         run: |
-          echo "Branch name in job2: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job2: ${{ needs.build.outputs.output1 }}"
   job3:
     needs: job2
     runs-on: ubuntu-latest
     steps:
       - name: Use branch name in job3
         run: |
-          echo "Branch name in job3: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job3: ${{ needs.build.outputs.output1 }}"
   job4:
     needs: job3
     runs-on: ubuntu-latest
     steps:
       - name: Use branch name in job4
         run: |
-          echo "Branch name in job4: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job4: ${{ needs.build.outputs.output1 }}"

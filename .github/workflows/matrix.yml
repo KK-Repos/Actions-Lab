@@ -10,35 +10,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Get branch name
         id: branch_name
         run: |
-          bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS
-        shell: bash 
-      - name: Use the branch name in another job
-        run: echo ${{ steps.branch_name.outputs.branch_name }}
+          branch_name=$(./.github/scripts/generateTestTag.sh TEST-1234/actionS)
+          echo "##[set-output name=branch_name;]$branch_name"
+          echo "::set-env name=BRANCH_NAME::$branch_name"
+
   job2:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Use branch name in job2
         run: |
-          echo "Branch name in job2: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job2: $BRANCH_NAME"
 
   job3:
-    needs: job2
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Use branch name in job3
         run: |
-          echo "Branch name in job3: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job3: $BRANCH_NAME"
 
   job4:
-    needs: job3
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Use branch name in job4
         run: |
-          echo "Branch name in job4: ${{ needs.build.outputs.branch_name }}"
+          echo "Branch name in job4: $BRANCH_NAME"

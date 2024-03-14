@@ -19,7 +19,7 @@ jobs:
           echo $BRANCH_NAME
         shell: bash 
       - name: Use the branch name in another job
-        run: echo ${{ steps.branch_name.outputs.branch_name }}
+        run: echo ${{ steps.branch_name.outputs.BRANCH_NAME }}
   job2:
     needs: build
     runs-on: ubuntu-latest

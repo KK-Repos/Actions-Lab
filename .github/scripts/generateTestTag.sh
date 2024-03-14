@@ -14,3 +14,4 @@ formatted_branch_lower=$(echo "$formatted_branch" | tr '[:upper:]' '[:lower:]')
 # Append current time to the formatted and lowercase branch name
 final_branch_name="${formatted_branch_lower}-${current_time}"
 
+echo "BRANCH_NAME=$final_branch_name" >> "$GITHUB_OUTPUT"

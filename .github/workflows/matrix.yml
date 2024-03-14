@@ -18,9 +18,7 @@ jobs:
           bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS
         shell: bash 
       - name: Use the branch name in another job
-        uses: actions/another-job
-        with:
-          branch: ${{ steps.branch_name.outputs.branch_name }}
+        run: echo ${{ steps.branch_name.outputs.branch_name }}
   # runner-indexes:
   #   runs-on: ubuntu-latest
   #   name: Parallelism

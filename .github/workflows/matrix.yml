@@ -15,6 +15,7 @@ jobs:
       - id: step1
         run: |
           BRANCH_NAME=$(bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS) 
+          echo $BRANCH_NAME
           echo "BRANCH_NAME=BRANCH_NAME" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest

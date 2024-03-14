@@ -17,8 +17,7 @@ jobs:
       - name: Get branch name
         id: branch_name
         run: |
-          BRANCH_NAME=$(bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS)
-          echo $BRANCH_NAME
+          bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS
         shell: bash 
       - name: Use the branch name in another job
         run: echo ${{ steps.branch_name.outputs.BRANCH_NAME }}

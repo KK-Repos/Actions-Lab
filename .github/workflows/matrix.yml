@@ -15,7 +15,7 @@ jobs:
       - name: Get branch name
         id: branch_name
         run: |
-          branch_name=$(./.github/scripts/generateTestTag.sh TEST-1234/actionS)
+          branch_name=$(bash ./.github/scripts/generateTestTag.sh TEST-1234/actionS)
           echo "##[set-output name=branch_name;]$branch_name"
           echo "::set-env name=BRANCH_NAME::$branch_name"
 

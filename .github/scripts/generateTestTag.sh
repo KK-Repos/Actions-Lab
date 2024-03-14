@@ -14,5 +14,3 @@ formatted_branch_lower=$(echo "$formatted_branch" | tr '[:upper:]' '[:lower:]')
 # Append current time to the formatted and lowercase branch name
 final_branch_name="${formatted_branch_lower}-${current_time}"
 
-# Output the final branch name as key-value pair
-echo "::set-output name=branch_name::$final_branch_name"

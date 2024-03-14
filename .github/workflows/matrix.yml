@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Use branch name in job3
         run: |
-          echo "Branch name in job3: $BRANCH_NAME_TAG
+          echo "Branch name in job3: $BRANCH_NAME_TAG"

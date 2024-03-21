@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# dummy test
-
 PR_NUMBER=$(curl -L \
   -X POST \
   -H "Accept: application/vnd.github+json" \

@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Repo Name
       run: echo "${{ github.event.repository.name }} :rocket:"
+    - name: TEST
+      run: echo 'Webapp :rocket:'
     - name: print the Userpicker
       run: echo $BRANCH
     - name: print branchname

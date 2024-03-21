@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - master
     paths-ignore:
-      - 'README.md'
+      - "server/*.sh"
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Repo Name
-      run: echo ${{ github.event.repository.name }}
+      run: echo "${{ github.event.repository.name }} :rocket:"
     - name: print the Userpicker
       run: echo $BRANCH
     - name: print branchname

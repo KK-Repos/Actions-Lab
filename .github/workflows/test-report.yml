@@ -18,6 +18,7 @@ env:
 jobs:
   my_job:
     runs-on: ubuntu-latest
+    environment: test
     outputs:
       json: ${{ steps.generate-index-list.outputs.json }}
     steps:

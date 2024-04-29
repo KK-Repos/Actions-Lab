@@ -26,7 +26,7 @@ jobs:
         run: echo ${{vars.CYPRESS_INSTANCE_COUNT}}
       - id: generate-index-list
         run: |
-          if [ ${{ inputs.cypressInput }} == true && ${{ inputs.unitTestInput }} == true ]; then
+          if [ ${{ inputs.cypressInput }} == true & ${{ inputs.unitTestInput }} == true ]; then
             echo json=8 >> "$GITHUB_OUTPUT"
           elif [ ${{ inputs.unitTestInput }} == true ]; then
             echo json=${{vars.UT_INSTANCE_COUNT}} >> "$GITHUB_OUTPUT"

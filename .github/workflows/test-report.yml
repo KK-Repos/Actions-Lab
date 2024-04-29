@@ -1,51 +1,11 @@
 name: test
 
 on: workflow_dispatch
-env:
-  ENV: ${{ github.ref_name == 'master' && ${{vars.ENV}} || ${{secrets.ENV}} }}
 
 jobs:
   test-job-1:
     runs-on: ubuntu-latest
     name: test-upload Artifact
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: print the name
-        run: echo $ENV
-      - name: print the dir 
-        run: ls
-      - name: Upload Data Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: res
-          path: resultData.json
-          retention-days: 1
-            
-  test-job-2:
-    runs-on: ubuntu-latest
-    name: test-download-artifact
-    needs: test-job-1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Download Data Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: res
-          path: result
-      - name: print workdir
-        run: ls
-      - name: check result folder
-        run: |
-          cd result/
-          ls
-      - name: print the content
-        run: node printResult.js
-      - name: Read and Print JSON
-        run: |
-          data=$(cat result/resultData.json)
-          echo -e "\e[32m"
-          echo "$data" | jq -r '.[] | "File: \(.text)"'
-          echo -e "\e[0m"   # Reset text color
-
+      - name: Print the repo name
+        uses: echo ${{ github.event.repository.name }}

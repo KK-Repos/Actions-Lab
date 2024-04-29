@@ -23,7 +23,7 @@ jobs:
       json: ${{ steps.generate-index-list.outputs.json }}
     steps:
       - name: Checking
-        run: echo ${{vars.CYPRESS_INSTANCE_COUNT}}
+        run: echo ${{vars.CYPRESS_INSTANCE_COUNT + vars.UT_INSTANCE_COUNT }}
       - id: generate-index-list
         run: |
           if [ ${{ inputs.cypressInput }} == true & ${{ inputs.unitTestInput }} == true ]; then

@@ -1,7 +1,20 @@
 name: test
 
-on: workflow_dispatch
-
+on: 
+  workflow_dispatch:
+    inputs:
+      cypressInput:
+        type: boolean
+        description: 'Run Cypress Test'
+      unitTestInput:
+        type: boolean
+        description: 'Run Unit Test'
+      slackInput:
+        type: boolean
+        description: 'Slack report for cypress test'
+env:
+  NO_OF_INSTANCES: ${{ inputs.cypressInput == 'true' && '5' || '0' }}
+  
 jobs:
   runner-indexes:
     runs-on: ubuntu-latest
@@ -11,3 +24,5 @@ jobs:
         run: echo ${{ github.event.repository.name }}
       - name: print the repo name
         run: echo ${{ github.actor }}
+      - name: print the check
+        run: echo ${{env.NO_OF_INSTANCES}}

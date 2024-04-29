@@ -24,9 +24,7 @@ jobs:
     steps:
       - name: Checking
         run: |
-          NUM1=${{vars.UT_INSTANCE_COUNT}}
-          NUM2=${{vars.CYPRESS_INSTANCE_COUNT}}
-          SUM=$((NUM1 + NUM2))
+          SUM=$((${{vars.UT_INSTANCE_COUNT}} + ${{vars.CYPRESS_INSTANCE_COUNT}}))
           echo $SUM
       - id: generate-index-list
         run: |

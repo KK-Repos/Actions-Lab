@@ -13,21 +13,19 @@ on:
         type: boolean
         description: 'Slack report for cypress test'
 env:
-  NO_OF_INSTANCES: |
-    ${{ if eq(inputs.cypressInput, true) }}${{ vars.CYPRESS_INSTANCE_COUNT }}
-    ${{ else if eq(inputs.unitTestInput, true) }}${{ var.UT_INSTANCE_COUNT }}
-    ${{ else }}8
-    ${{ endif }}
-
+  NO_OF_INSTANCES: ${{ inputs.cypressInput == true && 7 ||  inputs.unitTestInput == true && 1 || 8 }}
   
 jobs:
-  runner-indexes:
+  my_job:
     runs-on: ubuntu-latest
-    name: Print the repo name
     steps:
-      - name: print the repo name
-        run: echo ${{ github.event.repository.name }}
-      - name: print the repo name
-        run: echo ${{ github.actor }}
-      - name: print the check
-        run: echo ${{env.NO_OF_INSTANCES}}
+      - name: Echo Value
+        run: |
+          if [ ${{ inputs.cypressInput }} == true ]; then
+            echo 7
+          elif [ ${{ inputs.unitTestInput }} == true ]; then
+            echo 1
+          else
+            echo 8
+          fi
+

@@ -18,14 +18,15 @@ env:
 jobs:
   my_job:
     runs-on: ubuntu-latest
+    outputs:
+      json: ${{ steps.generate-index-list.outputs.json }}
     steps:
       - name: Echo Value
         run: |
-          if [ ${{ inputs.cypressInput  == 'true' }}]; then
-            echo 7
-          elif [ ${{ inputs.unitTestInput == 'true' }}  ]; then
+          if [ ${{ inputs.cypressInput }} == true ]; then
+            echo "json=${{vars.CYPRESS_INSTANCE_COUNT}}" >> "$GITHUB_OUTPUT"
+          elif [ ${{ inputs.unitTestInput }} == true ]; then
             echo 1
           else
             echo 8
           fi
-

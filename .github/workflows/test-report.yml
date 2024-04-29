@@ -3,11 +3,9 @@ name: test
 on: workflow_dispatch
 
 jobs:
-  test-job-1:
+  runner-indexes:
     runs-on: ubuntu-latest
-  steps:
-    runs-on: ubuntu-latest
-    name: test-upload Artifact
+    name: Print the repo name
     steps:
-      - name: Print the repo name
-        uses: echo ${{ github.event.repository.name }}
+      - name: print the repo name
+        run: echo ${{ github.event.repository.name }}

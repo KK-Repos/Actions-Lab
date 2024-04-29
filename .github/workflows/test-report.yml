@@ -22,14 +22,11 @@ jobs:
     outputs:
       json: ${{ steps.generate-index-list.outputs.json }}
     steps:
-      - name: Checking
-        run: |
-          SUM=$((${{vars.UT_INSTANCE_COUNT}} + ${{vars.CYPRESS_INSTANCE_COUNT}}))
-          echo $SUM
       - id: generate-index-list
         run: |
           if [ ${{ inputs.cypressInput }} == true & ${{ inputs.unitTestInput }} == true ]; then
-            echo json=8 >> "$GITHUB_OUTPUT"
+            SUM=$((${{vars.UT_INSTANCE_COUNT}} + ${{vars.CYPRESS_INSTANCE_COUNT}}))
+            echo json=$SUM >> "$GITHUB_OUTPUT"
           elif [ ${{ inputs.unitTestInput }} == true ]; then
             echo json=${{vars.UT_INSTANCE_COUNT}} >> "$GITHUB_OUTPUT"
           elif [ ${{ inputs.cypressInput }} == true ]; then

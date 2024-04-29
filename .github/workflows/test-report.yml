@@ -13,7 +13,7 @@ on:
         type: boolean
         description: 'Slack report for cypress test'
 env:
-  NO_OF_INSTANCES: ${{ inputs.cypressInput == 'true' && '5' || '0' }}
+  NO_OF_INSTANCES: ${{ inputs.cypressInput == true && '5' || '0' }}
   
 jobs:
   runner-indexes:

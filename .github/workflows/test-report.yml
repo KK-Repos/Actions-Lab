@@ -22,6 +22,8 @@ jobs:
     outputs:
       json: ${{ steps.generate-index-list.outputs.json }}
     steps:
+      - name: Checking
+        run: echo ${{vars.CYPRESS_INSTANCE_COUNT}}
       - name: Echo Value
         run: |
           if [ ${{ inputs.cypressInput }} == true ]; then

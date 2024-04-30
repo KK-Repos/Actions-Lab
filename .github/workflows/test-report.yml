@@ -24,14 +24,15 @@ jobs:
     steps:
       - id: generate-index-list
         run: |
-          if [ ${{ inputs.cypressInput }} == true & ${{ inputs.unitTestInput }} == true ]; then
-            SUM=$((${{vars.UT_INSTANCE_COUNT}} + ${{vars.CYPRESS_INSTANCE_COUNT}}))
-            echo json=$SUM >> "$GITHUB_OUTPUT"
-          elif [ ${{ inputs.unitTestInput }} == true ]; then
-            echo json=${{vars.UT_INSTANCE_COUNT}} >> "$GITHUB_OUTPUT"
-          elif [ ${{ inputs.cypressInput }} == true ]; then
-            echo json=${{vars.CYPRESS_INSTANCE_COUNT}} >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.cypressInput }}" == true ] && [ "${{ inputs.unitTestInput }}" == true ]; then
+            SUM=$(( ${{vars.UT_INSTANCE_COUNT}} + ${{vars.CYPRESS_INSTANCE_COUNT}} ))
+            echo "json=$SUM" >> "$GITHUB_ENV"
+          elif [ "${{ inputs.unitTestInput }}" == true ]; then
+            echo "json=${{vars.UT_INSTANCE_COUNT}}" >> "$GITHUB_ENV"
+          elif [ "${{ inputs.cypressInput }}" == true ]; then
+            echo "json=${{vars.CYPRESS_INSTANCE_COUNT}}" >> "$GITHUB_ENV"
           fi
+
   my_job-1:
     runs-on: ubuntu-latest
     environment: test

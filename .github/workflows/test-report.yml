@@ -32,7 +32,7 @@ jobs:
           elif [ "${{ inputs.cypressInput }}" == true ]; then
             echo "json=${{vars.CYPRESS_INSTANCE_COUNT}}" >> "$GITHUB_ENV"
           else
-            echo instances=$SUM >> "$GITHUB_OUTPUT"
+            echo json=$SUM >> "$GITHUB_OUTPUT"
           fi
 
   my_job-1:

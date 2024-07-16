@@ -20,5 +20,5 @@ jobs:
     environment: test
     steps:
       - name: check env 
-        run: echo ${{ env.NAME }}
+        run: echo ${{ vars.NAME }}
 

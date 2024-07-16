@@ -19,6 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
     steps:
-      - name: CHeck config name
-        run: echo ${{ inputs.config }}
+      - name: check env 
+        run: echo ${{ env.NAME }}
 

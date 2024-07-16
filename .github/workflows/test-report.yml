@@ -20,5 +20,12 @@ jobs:
     environment: test
     steps:
       - name: check env 
-        run: echo ${{ vars.NAME }}
+        run: |
+          echo NAMES=${{ vars.NAME }}
+          IFS=',' read -r -a names_array <<< "${NAMES[@]}"
+          for name in "${names_array[@]}"; do
+          echo "Processing $name" 
+          done
+
+
 

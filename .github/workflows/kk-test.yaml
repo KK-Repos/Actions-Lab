@@ -1,4 +1,4 @@
-name: test
+name: KK-test
 
 on: 
   workflow_dispatch:

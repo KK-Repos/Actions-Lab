@@ -1,0 +1,28 @@
+name: test
+
+on: 
+  workflow_dispatch:
+    inputs:
+      config:
+        type: choice
+        description: "Create default config"
+        required: true
+        default: no
+        options:
+          - yes
+          - no   
+env:
+  NO_OF_INSTANCES: ${{ inputs.cypressInput == true && 7 ||  inputs.unitTestInput == true && 1 || 8 }}
+  
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: check env 
+        run: |
+          echo NAMES=${{ vars.NAME }}
+          IFS=',' read -r -a names_array <<< "${NAMES[@]}"
+          for name in "${names_array[@]}"; do
+          echo "Processing $name" 
+          done

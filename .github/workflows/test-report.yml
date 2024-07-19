@@ -1,4 +1,4 @@
-name: test
+name: test-arr
 
 on: 
   workflow_dispatch:
@@ -22,9 +22,12 @@ jobs:
       - name: check env 
         run: |
           echo NAMES=${{ vars.NAME }}
-          IFS=',' read -r -a names_array <<< "${NAMES[@]}"
-          for name in "${names_array[@]}"; do
-          echo "Processing $name" 
+          TEST=$(echo $NAMES | tr ',' ' ')
+          read -r -a array <<< "$TEST"
+          
+          for element in "${array[@]}"
+          do
+              echo $element
           done
 
 

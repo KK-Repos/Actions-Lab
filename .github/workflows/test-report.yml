@@ -21,13 +21,9 @@ jobs:
     steps:
       - name: check env 
         run: |
-          echo NAMES=${{ vars.NAME }}
-          TEST=$(echo $NAMES | tr ',' ' ')
-          read -r -a array <<< "$TEST"
-          
-          for element in "${array[@]}"
-          do
-              echo $element
+          IFS=',' read -r -a array <<< "${{ vars.NAME }}"
+          for item in "${array[@]}"; do
+            echo "Processing item: $item"
           done
 
 

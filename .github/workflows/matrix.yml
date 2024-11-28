@@ -12,7 +12,11 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
+      - name: Getting Git-Sha Value
+        run: GIT_SHA=$(git rev-parse --short HEAD) && echo "GIT_SHA=$GIT_SHA" >> "$GITHUB_ENV"
 
+      - name: Print Git SHA
+        run: echo "Git SHA is ${{ env.GIT_SHA }}"
       - name: Get branch name
         id: branch_name
         run: |

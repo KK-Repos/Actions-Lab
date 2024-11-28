@@ -30,6 +30,12 @@ jobs:
     outputs:
       output2: ${{ steps.branch_name_tag.outputs.BRANCH_NAME_TAG }}
     steps:
+      - name: Getting Git-Sha Value
+        run: GIT_SHA=$(git rev-parse --short HEAD) && echo "GIT_SHA=$GIT_SHA" >> "$GITHUB_ENV"
+
+      - name: Print Git SHA
+        run: echo "Git SHA is ${{ env.GIT_SHA }}"
+        
       - name: Get branch name
         id: branch_name_tag
         run: |
